@@ -8,6 +8,7 @@ namespace ShopEZAPI.Controllers;
 [Route("api/[controller]")]
 public class ItemsController : ControllerBase
 {
+    // Describe or do comments for comprehension
     private readonly ItemsService _itemsService;
     public ItemsController(ItemsService itemsService) =>
         _itemsService = itemsService;

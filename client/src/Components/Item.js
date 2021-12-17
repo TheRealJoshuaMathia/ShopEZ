@@ -1,12 +1,22 @@
 import React from "react"
-import { Container } from "@mui/material/Container";
+import Container from "@mui/material/Container";
+import Card from "@mui/material/Card";
+import { Typography } from "@mui/material";
 
-const Item = () => {
-
+const Item = (props) => {
     return (
-
         <>
-            <h3>Hello From Item.js</h3>
+            <Container>
+
+                <Card>
+                    [// Test card just the the purpose of seeing the data populated on the front end]
+                    <Typography variant="h3"> {props.title} </Typography>
+                    <Typography variant="h4">{props.type}</Typography>
+                    <Typography variant="h4">{props.catagory}</Typography>
+                    <Typography variant="h5">{props.store}</Typography>
+                    <Typography variant="h5">{props.quantity}</Typography>
+                </Card>
+            </Container>
         </>
     )
 }
