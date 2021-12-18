@@ -1,9 +1,11 @@
 using ShopEZAPI.Models;
 using ShopEZAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace ShopEZAPI.Controllers;
 
+[EnableCors("CorsPolicy")]
 [ApiController]
 [Route("api/[controller]")]
 public class ItemsController : ControllerBase
