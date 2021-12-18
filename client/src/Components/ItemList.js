@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import Item from "./Item";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
 
 const styles = createTheme({
     components: {
@@ -9,6 +11,7 @@ const styles = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: 'black',
+                    height: "80vh"
                 },
             },
         },
@@ -55,7 +58,13 @@ class ItemList extends Component {
             ))
         }
         return (
-            <ThemeProvider theme={styles}> {itemList} </ThemeProvider>
+            <ThemeProvider theme={styles}>
+                <Container>
+                    <Stack spacing={2}>
+                        {itemList}
+                    </Stack>
+                </Container>
+            </ThemeProvider>
         )
     }
 }

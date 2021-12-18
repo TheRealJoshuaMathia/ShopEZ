@@ -1,22 +1,47 @@
 import React from "react"
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import { Typography } from "@mui/material";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const styles = createTheme({
+    components: {
+        MuiContainer: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'pink',
+                    paddingBottom: '10px',
+                    paddingTop: '10px'
+                },
+            },
+        },
+        MuiCard: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: ''
+                }
+            }
+        }
+    },
+});
 const Item = (props) => {
     return (
         <>
-            <Container>
+            <ThemeProvider theme={styles}>
+                <Container>
+                    <Card>
+                        <CardContent>
+                            <Typography variant="h4">{props.title} </Typography>
+                            <Typography variant="body2">Type: {props.type}</Typography>
+                            <Typography variant="body2">Catagory: {props.catagory}</Typography>
+                            <Typography variant="body2">Store: {props.store}</Typography>
+                            <Typography variant="body2">Quantity: {props.quantity}</Typography>
+                        </CardContent>
+                    </Card>
+                </Container>
+            </ThemeProvider>
 
-                <Card>
-                    [// Test card just the the purpose of seeing the data populated on the front end]
-                    <Typography variant="h3"> {props.title} </Typography>
-                    <Typography variant="h4">{props.type}</Typography>
-                    <Typography variant="h4">{props.catagory}</Typography>
-                    <Typography variant="h5">{props.store}</Typography>
-                    <Typography variant="h5">{props.quantity}</Typography>
-                </Card>
-            </Container>
         </>
     )
 }
