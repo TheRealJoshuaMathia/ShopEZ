@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Item from "./Item";
+import Item from "./ListItem";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
@@ -11,7 +11,9 @@ const styles = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: 'black',
-                    height: "80vh"
+                    marginTop: 40,
+                    paddingTop: 30,
+                    paddingBottom: 30
                 },
             },
         },
