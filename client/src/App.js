@@ -1,10 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./Components/Footer";
-import Home from "./Components/Home";
-import ItemList from "./routes/ItemList";
-import Login from "./routes/Login";
+import Home from "./pages/Home";
+import ItemList from "./pages/ItemList";
+import Login from "./pages/Login";
 import Navigation from "./Components/Navigation";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const
+
+
+
+
 
 function App() {
   return (
