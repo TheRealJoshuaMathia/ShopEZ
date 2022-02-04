@@ -7,24 +7,42 @@ import Login from "./pages/Login";
 import Navigation from "./Components/Navigation";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const
-
-
-
-
+const app = createTheme({
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "grey",
+          ".link": {
+            a: {
+              textDecoration: "none",
+              color: "white",
+            },
+            "&:hover": {
+              backgroundColor: "black",
+              boxShadow: "none",
+            },
+          },
+        },
+      },
+    },
+  },
+});
 
 function App() {
   return (
     <Router>
-      <div className="app">
-        <Navigation />
-        <Routes>
-          <Route exact path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/items" element={<ItemList />}></Route>
-        </Routes>
-        <Footer />
-      </div>
+      <ThemeProvider theme={app}>
+        <div className="app">
+          <Navigation />
+          <Routes>
+            <Route exact path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/items" element={<ItemList />}></Route>
+          </Routes>
+          <Footer />
+        </div>
+      </ThemeProvider>
     </Router>
   );
 }
