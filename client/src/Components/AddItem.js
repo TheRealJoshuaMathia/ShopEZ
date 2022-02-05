@@ -1,8 +1,27 @@
 import React, { Component } from "react";
 import ItemDataService from "../services/items.service";
 import Button from "@mui/material/Button";
-import { TextField } from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+
+// AddItem Styling
+
+// const styles = createTheme({
+
+//     components: {
+//     Box: {
+//         styleOverrides: {
+
+//         }
+//     }
+// }
+
+
+// });
+
+
 export default class AddItem extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +73,6 @@ export default class AddItem extends Component {
             store: this.state.store
         };
 
-
         ItemDataService.create(data)
             .then(response => {
                 this.setState({
@@ -84,33 +102,49 @@ export default class AddItem extends Component {
 
     render() {
         return (
-            <div className="submit-form">
+            <Box
+                sx={{
+
+                }}
+                component="form">
                 {this.state.submitted ? (
                     <div>
                         <h4>Submitted successfully!</h4>
                         <Button variant="contained" color="success">Success</Button>
                     </div>
                 ) : (
-                    <Box
-                        component="form">
-                        <div>
-                            <TextField required id="outlined-basic" label="Title" variant="outlined" />
-                        </div>
-                        <div>
-                            <TextField id="outlined-basic" label="Type" variant="outlined" />
-                        </div>
-                        <div>
-                            <TextField id="outlined-basic" label="Catagory" variant="outlined" />
-                        </div>
-                        <div>
-                            <TextField id="outlined-basic" label="Store" variant="outlined" />
-                        </div>
-                    </Box>
+                    <Grid container direction="row"
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center" spacing={1}
+                        sx={{
+                            background: "red",
+                            minHeight: "100vh"
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                background: "green"
+                            }}
+                        >
+                            <Grid item>
+                                <TextField required id="outlined-basic" label="Title" variant="outlined" />
+                            </Grid>
+                            <Grid item >
+                                <TextField id="outlined-basic" label="Type" variant="outlined" />
+                            </Grid>
+                            <Grid item>
+                                <TextField id="outlined-basic" label="Catagory" variant="outlined" />
+                            </Grid>
+                            <Grid item>
+                                <TextField id="outlined-basic" label="Store" variant="outlined" />
+                            </Grid>
+                        </Box>
 
-                )};
-
-
-            </div>
+                    </Grid>
+                )
+                }
+            </Box>
         )
     }
 }
