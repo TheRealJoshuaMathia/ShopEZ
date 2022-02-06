@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import ItemDataService from "../services/items.service";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 
@@ -65,6 +64,26 @@ export default class AddItem extends Component {
         });
     }
 
+    const[store, setStore] = React.useState()
+    const stores = [
+        {
+            value: 'USD',
+            label: '$',
+        },
+        {
+            value: 'EUR',
+            label: '€',
+        },
+        {
+            value: 'BTC',
+            label: '฿',
+        },
+        {
+            value: 'JPY',
+            label: '¥',
+        },
+    ];
+
     saveItem() {
         var data = {
             title: this.state.title,
@@ -102,49 +121,60 @@ export default class AddItem extends Component {
 
     render() {
         return (
-            <Box
-                sx={{
-
-                }}
-                component="form">
+            <form>
                 {this.state.submitted ? (
                     <div>
                         <h4>Submitted successfully!</h4>
                         <Button variant="contained" color="success">Success</Button>
                     </div>
                 ) : (
-                    <Grid container direction="row"
-                        display="flex"
+                    <Grid container
+                        marginTop={1}
                         justifyContent="center"
-                        alignItems="center" spacing={1}
+                        alignItems="center"
                         sx={{
                             background: "red",
                             minHeight: "100vh"
                         }}
                     >
-                        <Box
-                            sx={{
-                                background: "green"
-                            }}
-                        >
-                            <Grid item>
+                        <Grid
+                            container
+                            display="flex"
+                            direction="column"
+                            paddingTop={0}
+                            spacing={0}
+                            justifyContent="center"
+                            wrap="nowrap"
+                            alignItems="center"
+                            sx={{ background: "gray", height: "60vh", width: "50vh" }}>
+                            <Grid item marginTop={5} marginBottom={5} >
                                 <TextField required id="outlined-basic" label="Title" variant="outlined" />
                             </Grid>
-                            <Grid item >
+                            <Grid item marginBottom={5}>
                                 <TextField id="outlined-basic" label="Type" variant="outlined" />
                             </Grid>
-                            <Grid item>
-                                <TextField id="outlined-basic" label="Catagory" variant="outlined" />
+                            <Grid item marginBottom={5}>
+                                <TextField
+                                    id="outlined-basic"
+                                    label="Catagory"
+                                    variant="outlined"
+                                    select
+                                    value={store}>
+                                    {stores.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
                             </Grid>
-                            <Grid item>
+                            <Grid item marginBottom={5}>
                                 <TextField id="outlined-basic" label="Store" variant="outlined" />
                             </Grid>
-                        </Box>
-
+                        </Grid>
                     </Grid>
                 )
                 }
-            </Box>
+            </form>
         )
     }
 }
