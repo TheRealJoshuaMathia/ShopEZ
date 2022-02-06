@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
+import { Link } from "react-router-dom";
 
 //AddItem Styling
 
@@ -85,6 +86,7 @@ export default class AddItem extends Component {
       store: event.target.value,
     });
   }
+
   saveItem() {
     var data = {
       title: this.state.title,
@@ -110,6 +112,7 @@ export default class AddItem extends Component {
         console.log(event);
       });
   }
+
   newItem() {
     this.setState({
       title: "",
@@ -128,7 +131,7 @@ export default class AddItem extends Component {
             <div>
               <h4>Submitted successfully!</h4>
               <Button variant="contained" color="success">
-                Success
+                <Link to="/items">Items</Link>
               </Button>
             </div>
           ) : (
@@ -139,7 +142,6 @@ export default class AddItem extends Component {
               alignItems="center"
               sx={{
                 background: "white",
-                minHeight: "50vh",
               }}
             >
               <Grid
@@ -151,7 +153,7 @@ export default class AddItem extends Component {
                 justifyContent="center"
                 wrap="nowrap"
                 alignItems="center"
-                sx={{ background: "gray", height: "60vh", width: "50vh" }}
+                sx={{ background: "gray", height: "inherit", width: "50vh" }}
               >
                 <Grid item marginTop={5} marginBottom={5}>
                   <TextField
@@ -160,6 +162,8 @@ export default class AddItem extends Component {
                     id="outlined-basic"
                     label="Title"
                     variant="outlined"
+                    value={this.state.title}
+                    onChange={this.onChangeTitle}
                   />
                 </Grid>
                 <Grid item marginBottom={5}>
@@ -168,6 +172,8 @@ export default class AddItem extends Component {
                     id="outlined-basic"
                     label="Type"
                     variant="outlined"
+                    value={this.state.type}
+                    onChange={this.onChangeType}
                   />
                 </Grid>
                 <Grid item marginBottom={5}>
@@ -176,6 +182,8 @@ export default class AddItem extends Component {
                     id="outlined-basic"
                     label="Catagory"
                     variant="outlined"
+                    value={this.state.catagory}
+                    onChange={this.onChangeCatagory}
                   ></TextField>
                 </Grid>
                 <Grid item marginBottom={5}>
@@ -185,7 +193,7 @@ export default class AddItem extends Component {
                     label="Store"
                     variant="outlined"
                     placeholder="Select"
-                    value={this.store}
+                    value={this.state.store}
                     onChange={this.onChangeStore}
                     select
                     helperText={`Please select "TBD" if unknown!`}
@@ -196,15 +204,23 @@ export default class AddItem extends Component {
                       </MenuItem>
                     ))}
                   </TextField>
-                  <Grid direction="row" display="flex" marginRight={3}>
-                    <Grid item marginTop={1}>
-                      <Button variant="contained" color="success">
+                  <Grid direction="row" display="flex">
+                    <Grid item marginTop={1} marginRight={3}>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        onClick={this.saveItem}
+                      >
                         Submit
                       </Button>
                     </Grid>
                     <Grid item marginTop={1}>
-                      <Button variant="contained" color="success">
-                        Submit
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={this.newItem}
+                      >
+                        Clear
                       </Button>
                     </Grid>
                   </Grid>
