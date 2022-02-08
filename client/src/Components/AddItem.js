@@ -182,6 +182,7 @@ export default class AddItem extends Component {
                     id="outlined-basic"
                     label="Catagory"
                     variant="outlined"
+                    autoComplete=""
                     value={this.state.catagory}
                     onChange={this.onChangeCatagory}
                   ></TextField>
