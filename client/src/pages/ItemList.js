@@ -6,7 +6,10 @@ import Stack from "@mui/material/Stack";
 import Container from "@mui/material/Container";
 import ItemActions from "../Components/ItemActions";
 import AddItem from "../Components/AddItem";
+import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+//import Button from "@mui/material/Button";
+
 const styles = createTheme({
   components: {
     MuiContainer: {
@@ -22,15 +25,30 @@ const styles = createTheme({
   },
 });
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 class ItemList extends Component {
   constructor(props) {
     super(props);
     this.testButton = this.testButton.bind(this);
     this.addNewItem = this.addNewItem.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.state = {
       items: [],
       isAddItemVisible: false,
       isEditItemVisible: false,
+      isModalOpen: false,
     };
   }
 
@@ -52,6 +70,14 @@ class ItemList extends Component {
   }
   addNewItem() {
     this.setState({ isAddItemVisible: true });
+    this.setState({ isModalOpen: true });
+  }
+  handleOpen() {
+    this.setState({ isModalOpen: true });
+    console.log(this.state.isModalOpen.valueOf);
+  }
+  handleClose() {
+    this.setState({ isModalOpen: false });
   }
 
   render() {
@@ -81,8 +107,20 @@ class ItemList extends Component {
     return (
       <ThemeProvider theme={styles}>
         <Container>
-          {this.state.isAddItemVisible ? <AddItem /> : null}
-
+          {this.state.isAddItemVisible ? (
+            <div>
+              <Modal
+                open={this.state.isModalOpen}
+                onClose={this.handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <AddItem />
+                </Box>
+              </Modal>
+            </div>
+          ) : null}
           <Stack spacing={2}>{itemList}</Stack>
         </Container>
       </ThemeProvider>

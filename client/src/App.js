@@ -6,7 +6,6 @@ import ItemList from "./pages/ItemList";
 import Login from "./pages/Login";
 import Navigation from "./Components/Navigation";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import AddItem from "./Components/AddItem";
 
 const app = createTheme({
   components: {
@@ -40,7 +39,6 @@ function App() {
             <Route exact path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/items" element={<ItemList />}></Route>
-            <Route path="/additem" element={<AddItem />}></Route>
           </Routes>
           <Footer />
         </div>
