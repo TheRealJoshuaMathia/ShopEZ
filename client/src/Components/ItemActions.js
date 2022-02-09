@@ -6,13 +6,13 @@ export default class ItemActions extends Component {
   constructor(props) {
     super(props);
     this.handleEdit = this.handleEdit.bind(this);
-    this.handleAdd = this.handleAdd.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   handleEdit() {
     this.props.editFunction(this.props.value);
   }
-  handleAdd() {
-    this.props.addFunction(this.props.value);
+  handleDelete() {
+    this.props.deleteFunction(this.props.value);
   }
   render() {
     return (
@@ -22,13 +22,8 @@ export default class ItemActions extends Component {
             Edit
           </Button>
         </Grid>
-        <Grid item marginRight={2}>
-          <Button variant="contained" color="success" onClick={this.handleAdd}>
-            Add
-          </Button>
-        </Grid>
         <Grid item>
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={this.handleDelete}>
             Delete
           </Button>
         </Grid>

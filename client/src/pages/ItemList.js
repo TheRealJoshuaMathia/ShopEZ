@@ -1,130 +1,124 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Item from "../Components/ListItem";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Stack from "@mui/material/Stack";
-import Container from "@mui/material/Container";
-import ItemActions from "../Components/ItemActions";
-import AddItem from "../Components/AddItem";
+import Grid from "@mui/material/Grid";
+import ItemDataService from "../services/items.service";
+import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
+import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
-//import Button from "@mui/material/Button";
 
 const styles = createTheme({
   components: {
     MuiContainer: {
       styleOverrides: {
         root: {
-          backgroundColor: "black",
-          marginTop: 40,
-          paddingTop: 30,
-          paddingBottom: 30,
+          backgroundColor: "grey",
+          paddingBottom: "20px",
+          paddingTop: "20px",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          ".item-details": {
+            color: "white",
+            padding: 10,
+          },
+          ".item-details-section": {
+            marginTop: 10,
+            backgroundColor: "black",
+            width: "inherit",
+            color: "white",
+          },
         },
       },
     },
   },
 });
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-class ItemList extends Component {
+export default class ItemList extends Component {
   constructor(props) {
     super(props);
-    this.testButton = this.testButton.bind(this);
-    this.addNewItem = this.addNewItem.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.retrieveItems = this.retrieveItems.bind(this);
+    this.refreshList = this.refreshList.bind(this);
+    this.setActiveItem = this.setActiveItem.bind(this);
     this.state = {
       items: [],
-      isAddItemVisible: false,
-      isEditItemVisible: false,
-      isModalOpen: false,
+      activeItem: null,
+      currentIndex: -1,
     };
   }
 
   componentDidMount() {
-    axios
-      .get("https://localhost:7205/api/items")
-      .then((res) => {
+    this.retrieveItems();
+  }
+  retrieveItems() {
+    ItemDataService.getAll()
+      .then((response) => {
         this.setState({
-          items: res.data,
+          items: response.data
         });
+        console.log(response);
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.log(error);
         console.log("Error showing list");
       });
   }
-
-  testButton() {
-    alert("You pressed me!");
+  refreshList() {
+    this.retrieveItems();
+    this.setState({
+      activeItem: null,
+      currentIndex: -1
+    });
   }
-  addNewItem() {
-    this.setState({ isAddItemVisible: true });
-    this.setState({ isModalOpen: true });
+  setActiveItem(item, index) {
+    this.setState({
+      activeItem: item,
+      currentIndex: index
+    });
   }
-  handleOpen() {
-    this.setState({ isModalOpen: true });
-    console.log(this.state.isModalOpen.valueOf);
-  }
-  handleClose() {
-    this.setState({ isModalOpen: false });
-  }
-
   render() {
-    const items = this.state.items;
-    let itemList;
-
-    if (!items) {
-      itemList = "There are no items found!";
-    } else {
-      itemList = items.map((item, k) => (
-        <>
-          <Item
-            key={k}
-            title={item.title}
-            type={item.type}
-            catagory={item.catagory}
-            store={item.store}
-          />
-          <ItemActions
-            editFunction={this.testButton}
-            addFunction={this.addNewItem}
-            deleteFunction={this.testButton}
-          />
-        </>
-      ));
-    }
+    const { items, activeItem, currentIndex } = this.state;
     return (
       <ThemeProvider theme={styles}>
-        <Container>
-          {this.state.isAddItemVisible ? (
-            <div>
-              <Modal
-                open={this.state.isModalOpen}
-                onClose={this.handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <AddItem />
-                </Box>
-              </Modal>
-            </div>
-          ) : null}
-          <Stack spacing={2}>{itemList}</Stack>
-        </Container>
-      </ThemeProvider>
+        <Grid
+          className="items"
+          container
+          direction="column"
+          alignItems="center"
+          alignContent="center"
+          display="flex">
+          {
+            items &&
+            items.map((item, index) => (
+              <Grid item
+                direction="column"
+                alignContent="center"
+                align
+                className={"grid-item " + (index == currentIndex ? "active" : "")
+                }
+                onClick={() => this.setActiveItem(item, index)}
+                key={index}>
+                <Card>
+                  <CardContent>
+                    {/* Todo: Make the Card content have the ripple effect. This would give a read only feel */}
+                    <Typography variant="h4"> {item.title} </Typography>
+                    <Box className="item-details-section">
+                      <Typography className="item-details">Type: {item.type}</Typography>
+                      <Typography className="item-details">
+                        Catagory: {item.catagory}
+                      </Typography>
+                      <Typography className="item-details">Store: {item.store}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card></Grid>
+
+            ))}
+        </Grid>
+      </ThemeProvider >
     );
   }
 }
-export default ItemList;

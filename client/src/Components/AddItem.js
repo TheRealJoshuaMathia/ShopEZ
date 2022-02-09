@@ -103,7 +103,6 @@ export default class AddItem extends Component {
           type: response.data.type,
           catagory: response.data.catagory,
           store: response.data.store,
-
           submitted: true,
         });
         console.log(data);
