@@ -1,24 +1,22 @@
 import http from "../axiosLoader";
 class ItemDataService {
-
-    getAll() {
-        return http.get("/items");
-    }
-    get(id) {
-        return http.get(`"/items/${id}`);
-    }
-    create(data) {
-        return http.post("/items", data);
-    }
-    update(id, data) {
-        return http.put(`"/items/${id}`, data);
-    }
-    delete(id) {
-        return http.delete(`"/items/${id}"`);
-    }
-    findByTitle(title) {
-        return http.get(`"/items?title=${title}`);
-    }
-
+  getAll() {
+    return http.get("/items");
+  }
+  get(itemId) {
+    return http.get(`/items/${itemId}`);
+  }
+  create(data) {
+    return http.post("/items", data);
+  }
+  update(itemId, data) {
+    return http.put(`/items/${itemId}`, data);
+  }
+  delete(itemId) {
+    return http.delete(`/items/${itemId}`);
+  }
+  findByTitle(title) {
+    return http.get(`/items?title=${title}`);
+  }
 }
 export default new ItemDataService();

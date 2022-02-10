@@ -55,17 +55,54 @@ export default class Item extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.state = {
       activeItem: {
-        id: null,
+        itemId: null,
         title: "",
         type: "",
         catagory: "",
         store: "",
       },
-      successMessage: false
-    }
+      successMessage: false,
+    };
   }
   componentDidMount() {
-    this.getItem(this.props.match.params.id);
+    if (this.props.match && this.props.params.itemId) {
+      this.getItem(this.props.params.itemId);
+    }
+  }
+  getItem(itemId) {
+    ItemDataService.get(itemId)
+      .then((response) => {
+        this.setState({
+          activeItem: response.data,
+        });
+        console.log(response.data);
+      })
+      .catch((event) => {
+        console.log(event);
+      });
+  }
+
+  updateItem() {
+    ItemDataService.update(this.state.activeItem.itemId, this.state.activeItem)
+      .then((response) => {
+        console.log(response.data);
+        this.setState({
+          successMessage: true,
+        });
+      })
+      .catch((event) => {
+        console.log(event);
+      });
+  }
+  deleteItem() {
+    ItemDataService.delete(this.state.activeItem.itemId)
+      .then((response) => {
+        console.log(response.data);
+        this.props.history.push("/items");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   onChangeTitle(event) {
     const title = event.target.value;
@@ -74,79 +111,41 @@ export default class Item extends Component {
       return {
         activeItem: {
           ...prevState.activeItem,
-          title: title
-        }
+          title: title,
+        },
       };
     });
   }
   onChangeType(event) {
     const type = event.target.value;
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeItem: {
         ...prevState.activeItem,
-        type: type
-      }
+        type: type,
+      },
     }));
   }
   onChangeCatagory(event) {
     const catagory = event.target.value;
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeItem: {
         ...prevState.activeItem,
-        catagory: catagory
-      }
+        catagory: catagory,
+      },
     }));
   }
   onChangeStore(event) {
     const store = event.target.value;
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeItem: {
         ...prevState.activeItem,
-        store: store
-      }
+        store: store,
+      },
     }));
   }
-  getItem(id) {
-    ItemDataService.get(id)
-      .then(response => {
-        this.setState({
-          activeItem: response.data
-        });
-        console.log(response.data);
-      })
-      .catch(event => {
-        console.log(event);
-      });
-  }
-
-  updateItem() {
-    ItemDataService.update(
-      this.state.activeItem.id,
-      this.state.activeItem
-    )
-      .then(response => {
-        console.log(response.data);
-        this.setState({
-          successMessage: true
-        });
-      })
-      .catch(event => {
-        console.log(event);
-      });
-  }
-  deleteItem() {
-    ItemDataService.delete(this.state.activeItem.id)
-      .then(response => {
-        console.log(response.data);
-        this.props.history.push('/items');
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
   render() {
-
     const { activeItem } = this.state;
+
     return (
       <ThemeProvider theme={ItemStyles}>
         {activeItem ? (
@@ -167,9 +166,9 @@ export default class Item extends Component {
                   id="outlined-basic"
                   label="Title"
                   variant="outlined"
-                  value={activeItem.title}
+                  placeholder={activeItem.title}
                   onChange={this.onChangeTitle}
-                />
+                ></TextField>
               </Grid>
               <Grid item marginBottom={5}>
                 <TextField
@@ -216,11 +215,10 @@ export default class Item extends Component {
               />
             </form>
           </Grid>
-        )
-          : (
-            <h4>Click on a tutorial</h4>
-          )}
-      </ThemeProvider >
+        ) : (
+          <h4>Click on a tutorial</h4>
+        )}
+      </ThemeProvider>
     );
   }
 }

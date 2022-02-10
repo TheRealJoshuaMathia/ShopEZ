@@ -5,11 +5,11 @@ import Button from "@mui/material/Button";
 export default class ItemActions extends Component {
   constructor(props) {
     super(props);
-    this.handleEdit = this.handleEdit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
-  handleEdit() {
-    this.props.editFunction(this.props.value);
+  handleUpdate() {
+    this.props.updateFunction(this.props.value);
   }
   handleDelete() {
     this.props.deleteFunction(this.props.value);
@@ -18,8 +18,12 @@ export default class ItemActions extends Component {
     return (
       <Grid display="flex" direction="row" container alignItems="flex-start">
         <Grid item marginRight={2}>
-          <Button variant="contained" color="primary" onClick={this.handleEdit}>
-            Edit
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleUpdate}
+          >
+            Update
           </Button>
         </Grid>
         <Grid item>

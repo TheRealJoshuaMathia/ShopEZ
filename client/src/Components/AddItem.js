@@ -55,7 +55,7 @@ export default class AddItem extends Component {
     this.newItem = this.newItem.bind(this);
 
     this.state = {
-      id: null,
+      itemId: null,
       title: "",
       type: "",
       catagory: "",
@@ -98,7 +98,7 @@ export default class AddItem extends Component {
     ItemDataService.create(data)
       .then((response) => {
         this.setState({
-          id: response.data.id,
+          itemId: response.data.itemId,
           title: response.data.title,
           type: response.data.type,
           catagory: response.data.catagory,

@@ -7,21 +7,17 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const styles = createTheme({
   components: {
-    MuiContainer: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "grey",
-          paddingBottom: "20px",
-          paddingTop: "20px",
-        },
-      },
-    },
     MuiCard: {
       styleOverrides: {
         root: {
+          "&.card-item": {
+            cursor: "pointer",
+            width: "50vh",
+          },
           ".item-details": {
             color: "white",
             padding: 10,
@@ -31,6 +27,9 @@ const styles = createTheme({
             backgroundColor: "black",
             width: "inherit",
             color: "white",
+          },
+          "&.active-item": {
+            backgroundColor: "gray",
           },
         },
       },
@@ -58,7 +57,7 @@ export default class ItemList extends Component {
     ItemDataService.getAll()
       .then((response) => {
         this.setState({
-          items: response.data
+          items: response.data,
         });
         console.log(response);
       })
@@ -71,54 +70,79 @@ export default class ItemList extends Component {
     this.retrieveItems();
     this.setState({
       activeItem: null,
-      currentIndex: -1
+      currentIndex: -1,
     });
   }
   setActiveItem(item, index) {
     this.setState({
       activeItem: item,
-      currentIndex: index
+      currentIndex: index,
     });
   }
   render() {
     const { items, activeItem, currentIndex } = this.state;
     return (
       <ThemeProvider theme={styles}>
-        <Grid
-          className="items"
-          container
-          direction="column"
-          alignItems="center"
-          alignContent="center"
-          display="flex">
-          {
-            items &&
+        <Grid className="items" container>
+          {items &&
             items.map((item, index) => (
-              <Grid item
-                direction="column"
-                alignContent="center"
-                align
-                className={"grid-item " + (index == currentIndex ? "active" : "")
-                }
-                onClick={() => this.setActiveItem(item, index)}
-                key={index}>
-                <Card>
+              <Grid
+                item
+                xs={8}
+                sx={{
+                  backgroundColor: "white",
+                  marginTop: 5,
+                }}
+              >
+                <Card
+                  className={
+                    "card-item " + (index === currentIndex ? "active-item" : "")
+                  }
+                  onClick={() => this.setActiveItem(item, index)}
+                  key={index}
+                >
                   <CardContent>
                     {/* Todo: Make the Card content have the ripple effect. This would give a read only feel */}
                     <Typography variant="h4"> {item.title} </Typography>
+                    <Typography variant="h4"> {item.itemId} </Typography>
                     <Box className="item-details-section">
-                      <Typography className="item-details">Type: {item.type}</Typography>
+                      <Typography className="item-details">
+                        Type: {item.type}
+                      </Typography>
                       <Typography className="item-details">
                         Catagory: {item.catagory}
                       </Typography>
-                      <Typography className="item-details">Store: {item.store}</Typography>
+                      <Typography className="item-details">
+                        Store: {item.store}
+                      </Typography>
                     </Box>
                   </CardContent>
-                </Card></Grid>
-
+                </Card>
+              </Grid>
             ))}
+          {activeItem ? (
+            <Grid
+              item
+              di
+              xs={4}
+              sx={{
+                backgroundColor: "red",
+              }}
+            >
+              <Button>
+                <Link to={"/items/" + activeItem.itemId} color="error">
+                  Edit
+                </Link>
+              </Button>
+            </Grid>
+          ) : (
+            <Grid direction="row" xs={4}>
+              <br />
+              <p>Select an Item!</p>
+            </Grid>
+          )}
         </Grid>
-      </ThemeProvider >
+      </ThemeProvider>
     );
   }
 }
