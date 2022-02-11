@@ -1,22 +1,29 @@
 import http from "../axiosLoader";
-class ItemDataService {
-  getAll() {
-    return http.get("/items");
-  }
-  get(itemId) {
-    return http.get(`/items/${itemId}`);
-  }
-  create(data) {
-    return http.post("/items", data);
-  }
-  update(itemId, data) {
-    return http.put(`/items/${itemId}`, data);
-  }
-  delete(itemId) {
-    return http.delete(`/items/${itemId}`);
-  }
-  findByTitle(title) {
-    return http.get(`/items?title=${title}`);
-  }
-}
-export default new ItemDataService();
+
+const getAll = () => {
+  return http.get("/items");
+};
+const get = (itemId) => {
+  return http.get(`/items/${itemId}`);
+};
+const create = (data) => {
+  return http.post("/items", data);
+};
+const update = (itemId, data) => {
+  return http.put(`/items/${itemId}`, data);
+};
+const remove = (itemId) => {
+  return http.delete(`/items/${itemId}`);
+};
+const findByTitle = (title) => {
+  return http.get(`/items?title=${title}`);
+};
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+  getAll,
+  get,
+  create,
+  update,
+  remove,
+  findByTitle,
+};

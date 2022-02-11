@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./Components/Footer";
-import Home from "./pages/Home";
-import ItemList from "./pages/ItemList";
-import Login from "./pages/Login";
+import Home from "./routes/Home";
+import ItemList from "./routes/ItemList";
+import Login from "./routes/Login";
 import Navigation from "./Components/Navigation";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import AddItem from "./Components/AddItem";
-import Item from "./Components/Item";
+import AddItem from "./routes/AddItem";
+import Item from "./routes/Item";
 
 const app = createTheme({
   components: {
@@ -38,11 +38,11 @@ function App() {
         <div className="app">
           <Navigation />
           <Routes>
-            <Route exact path="/" element={<Home />}></Route>
-            <Route path="/items" element={<ItemList />}></Route>
-            <Route path=":itemId" element={<Item />}></Route>
-            <Route path="/additem" element={<AddItem />}></Route>
-            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="additem" element={<AddItem />} />
+            <Route path="/items" element={<ItemList />} />
+            <Route path="/items/:itemId" element={<Item />} />
           </Routes>
           <Footer />
         </div>
