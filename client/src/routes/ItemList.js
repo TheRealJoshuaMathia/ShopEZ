@@ -25,7 +25,7 @@ const styles = createTheme({
           ".item-details-section": {
             marginTop: 10,
             backgroundColor: "black",
-            width: "inherit",
+            width: "50%",
             color: "white",
           },
           "&.active-item": {
@@ -60,16 +60,33 @@ const ItemList = () => {
   const selectedItem = (item, index) => {
     setActiveItem(item);
     setCurrentIndex(index);
+    showButton();
   };
+
+  const showButton = () => {
+    return (
+      <Grid item>
+        <Button sx={{
+          marginTop: 1,
+          padding: 2,
+        }} variant="contained" color="error">
+          <Link to={`/items/${activeItem.itemId}`}>
+            Edit
+          </Link>
+        </Button>
+      </Grid>
+    )
+  }
 
   return (
     <ThemeProvider theme={styles}>
-      <Grid className="items" container>
+      <Grid className="items" container
+        direction="column">
         {items &&
           items.map((item, index) => (
             <Grid
               item
-              xs={8}
+              direction="column"
               sx={{
                 backgroundColor: "white",
                 marginTop: 5,
@@ -98,31 +115,11 @@ const ItemList = () => {
                   </Box>
                 </CardContent>
               </Card>
+              {activeItem ? showButton() : null}
             </Grid>
           ))}
-        {activeItem ? (
-          <Grid
-            item
-            di
-            xs={4}
-            sx={{
-              backgroundColor: "red",
-            }}
-          >
-            <Button>
-              <Link to={`/items/${activeItem.itemId}`} color="error">
-                Edit
-              </Link>
-            </Button>
-          </Grid>
-        ) : (
-          <Grid direction="row" xs={4}>
-            <br />
-            <p>Select an Item!</p>
-          </Grid>
-        )}
       </Grid>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 export default ItemList;

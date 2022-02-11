@@ -84,6 +84,7 @@ const Item = () => {
       .then((response) => {
         console.log(response.data);
         console.log("Updated successfully!");
+        navigate("/items");
       })
       .catch((event) => {
         console.log(event);
