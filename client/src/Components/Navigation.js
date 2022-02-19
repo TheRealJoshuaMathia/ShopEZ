@@ -21,7 +21,7 @@ const appBarStyles = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "grey",
-          ".logo-link": {
+          ".link": {
             a: {
               textDecoration: "none",
               color: "white",
@@ -74,7 +74,7 @@ const Navigation = (props) => {
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
             >
-              <div className="logo-link">
+              <div className="link">
                 <Link to="/">ShopEZ</Link>
               </div>
             </Typography>
@@ -111,7 +111,9 @@ const Navigation = (props) => {
                 {pages.map((page) => (
                   <MenuItem key={page.page} onClick={handleCloseNavMenu}>
                     <Typography textAlign="center">
-                      <Link to={page.route}>{page.page}</Link>
+                      <div className="link">
+                        <Link to={page.route}>{page.page}</Link>
+                      </div>
                     </Typography>
                   </MenuItem>
                 ))}
@@ -134,7 +136,9 @@ const Navigation = (props) => {
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
-                  <Link to={page.route}>{page.page}</Link>
+                  <div className="link">
+                    <Link to={page.route}>{page.page}</Link>
+                  </div>
                 </Button>
               ))}
             </Box>
