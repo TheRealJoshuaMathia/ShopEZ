@@ -26,9 +26,6 @@ import com.joshuamathia.shopez.shopezapp.repository.ItemRepository;
 /**
  * ItemController
  */
-
-
-
  @RestController
  @CrossOrigin
  @RequestMapping("/api")
