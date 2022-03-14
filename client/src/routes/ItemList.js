@@ -70,7 +70,7 @@ const ItemList = () => {
           marginTop: 1,
           padding: 2,
         }} variant="contained" color="error">
-          <Link to={`/items/${activeItem.itemId}`}>
+          <Link to={`/items/${activeItem.id}`}>
             Edit
           </Link>
         </Button>
@@ -97,10 +97,11 @@ const ItemList = () => {
                   "card-item " + (index === currentIndex ? "active-item" : "")
                 }
                 onClick={() => selectedItem(item, index)}
-                key={index}
+                key={item.id}
               >
                 <CardContent>
                   {/* Todo: Make the Card content have the ripple effect. This would give a read only feel */}
+                  <Typography variant="h4"> {item.id} </Typography>
                   <Typography variant="h4"> {item.title} </Typography>
                   <Box className="item-details-section">
                     <Typography className="item-details">

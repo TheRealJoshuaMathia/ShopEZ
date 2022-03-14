@@ -14,17 +14,22 @@ package com.joshuamathia.shopez.shopezapp.models;
  @Table(name="items")
 public class Item {
     @Id
-    @Column(name="ITEM_ID")
+    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(name="title")
     private String title;
-    @Column(name="typeofItem")
+    @Column(name="type")
     private String type;
     @Column(name="catagory")
     private String catagory;
     @Column(name="store")
     private String store;
+
+    // Need to figure out how to edit the quantity of the item
+    // Will a copy of the object need to be made within ShoppingList class ??
+    // @Column(name="column")
+    // private Integer quantity;
 
     public Item() {
     }

@@ -86,7 +86,7 @@ public class ItemController {
             _item.setType(item.getType());
             _item.setCatagory(item.getCatagory());
             _item.setStore(item.getStore());
-            return new ResponseEntity<>(_item, HttpStatus.OK);
+            return new ResponseEntity<>(itemRepository.save(_item), HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND); 

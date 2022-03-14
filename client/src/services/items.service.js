@@ -3,17 +3,17 @@ import http from "../axiosLoader";
 const getAll = () => {
   return http.get("/items");
 };
-const get = (itemId) => {
-  return http.get(`/items/${itemId}`);
+const get = (id) => {
+  return http.get(`/items/${id}`);
 };
 const create = (data) => {
   return http.post("/items", data);
 };
-const update = (itemId, data) => {
-  return http.put(`/items/${itemId}`, data);
+const update = (id, data) => {
+  return http.put(`/items/${id}`, data);
 };
-const remove = (itemId) => {
-  return http.delete(`/items/${itemId}`);
+const remove = (id) => {
+  return http.delete(`/items/${id}`);
 };
 const findByTitle = (title) => {
   return http.get(`/items?title=${title}`);

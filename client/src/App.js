@@ -42,7 +42,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="additem" element={<AddItem />} />
             <Route path="/items" element={<ItemList />} />
-            <Route path="/items/:itemId" element={<Item />} />
+            <Route path="/items/:id" element={<Item />} />
           </Routes>
           <Footer />
         </div>

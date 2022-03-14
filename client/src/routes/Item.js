@@ -44,7 +44,7 @@ const stores = [
 ];
 
 const Item = () => {
-  const { itemId } = useParams();
+  const { id } = useParams();
   let navigate = useNavigate();
   const defaultItemState = {
     title: "",
@@ -54,8 +54,8 @@ const Item = () => {
   };
   const [activeItem, setActiveItem] = useState(defaultItemState);
 
-  const getItem = (itemId) => {
-    ItemDataService.get(itemId)
+  const getItem = (id) => {
+    ItemDataService.get(id)
       .then((response) => {
         setActiveItem(response.data);
         console.log(response.data);
@@ -67,8 +67,8 @@ const Item = () => {
   };
 
   useEffect(() => {
-    getItem(itemId);
-  }, [itemId]);
+    getItem(id);
+  }, [id]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setActiveItem({ ...activeItem, [name]: value });
@@ -80,7 +80,7 @@ const Item = () => {
       catagory: activeItem.catagory,
       store: activeItem.store,
     };
-    ItemDataService.update(activeItem.itemId, data)
+    ItemDataService.update(activeItem.id, data)
       .then((response) => {
         console.log(response.data);
         console.log("Updated successfully!");
@@ -92,7 +92,7 @@ const Item = () => {
       });
   };
   const deleteItem = () => {
-    ItemDataService.remove(activeItem.itemId)
+    ItemDataService.remove(activeItem.id)
       .then((response) => {
         console.log(response);
         navigate("/items");
