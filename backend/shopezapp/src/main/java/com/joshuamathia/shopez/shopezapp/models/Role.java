@@ -18,10 +18,10 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private ERole roleName;
+    private ERole name;
     public Role() {}
-    public Role(ERole roleName) {
-        this.roleName = roleName;
+    public Role(ERole name) {
+        this.name = name;;
     }
   
     // getters & setters
@@ -35,10 +35,10 @@ public class Role {
     }
     
     public ERole getRoleName() {
-        return this.roleName;
+        return this.name;
     }
     
-    public void setRoleName(ERole roleName) {
-        this.roleName = roleName;
+    public void setRoleName(ERole name) {
+        this.name = name;
     }
 }

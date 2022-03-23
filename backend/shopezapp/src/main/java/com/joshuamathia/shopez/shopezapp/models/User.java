@@ -21,16 +21,15 @@ import java.util.HashSet;
 
 @Entity
 @Table(name = "users",
-uniqueConstraints = {
-    @UniqueConstraint(columnNames = "username"),
-    @UniqueConstraint(columnNames = "password")
-} 
-)
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "password")
+    })
 public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(name = "username")
     @NotBlank
@@ -69,10 +68,10 @@ public class User {
     //Getters & Setters
  
     public Long getUserId() {
-        return this.userId;
+        return this.id;
     }
     public void setId(Long id) {
-        this.userId = id;
+        this.id = id;
     }
     public String getUsername() {
         return this.username;
