@@ -1,60 +1,67 @@
-// package com.joshuamathia.shopez.shopezapp.models;
+package com.joshuamathia.shopez.shopezapp.models;
 
-// import javax.persistence.GeneratedValue;
-// import javax.persistence.GenerationType;
-// import javax.persistence.Id;
-// import javax.persistence.Table;
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// //import java.util.List;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
-// @Entity
-// public class Home {
-//     @Id
-//     @Column(name="HOME_ID")
-//     @GeneratedValue(strategy = GenerationType.AUTO)
-//     private long homeId;
-//     @Column(name="name")
-//     private String name;
-//     // //To figure out where and how to manipulate the users & functions
-//     // @Column(name="caregivers")
-//     // List <Caregiver> caregivers;
-//     // @Column(name="shoppers")
-//     // List <Shopper> shoppers;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-//     //Home Class Methods
-//     public Home() {
-//     }
+import java.util.ArrayList;
+import java.util.List;
 
-//     public Home(String name) {
-//         this.name = name;
-//     }
-//     public Long getId(){
-//         return this.homeId;
-//     }
+import javax.persistence.JoinColumn;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
-//     public String getName(){
-//         return this.name;
-//     }
+@Entity
+@Table(name = "homes")
+public class Home {
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-//     public void setName(String name) {
-//         this.name = name;
-//     }
-    
-//     // public List<Caregiver> getCaregivers() {
-//     //     return this.caregivers;
-//     // }
+    @Column(name="name")
+    private String name;
 
-//     // public List<Shopper> getShoppers() {
-//     //     return this.shoppers;
-//     // }
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_homes",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name="home_id")
+    )
+    @JsonIgnoreProperties("homes")
+   private List<User> users = new ArrayList<>();
 
-//         // Admin should be able to edit this function will figure out implementation later
-//     // private void setCaregivers(List<Caregivers> caregivers){
-//     //     this.caregivers = caregivers;
-//     // }
+    //Home Class Methods
+    public Home() {
+    }
 
-//     // private void setShoppers(List<Shoppers> shoppers) {
-//     //     this.shoppers = shoppers;
-//     // }
-// }
+    public Home(String name) {
+        this.name = name;
+    }
+    public Long getId(){
+        return id;
+    }
+    public Long setId(Long id){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    @JsonIgnore
+    public List<User> getUsers(){
+        return users;
+    }
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+}
