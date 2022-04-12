@@ -15,9 +15,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Set;
 import java.util.HashSet;
-
 
 @Entity
 @Table(name = "users",
@@ -47,14 +48,21 @@ public class User {
     @Size(max = 120)
     private String password;
 
-    
     @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
+            joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_homes",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name="home_id")
+    )
+    private Set<Home> homes = new HashSet<>();
 
     public User() {
 
@@ -79,15 +87,18 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+    @JsonIgnore
     public String getEmail(){
         return this.email;
     }
     public void setEmail(String email){
         this.email = email;
     }
+    @JsonIgnore
     public String getPassword() {
         return this.password;
     }
+    @JsonIgnore
     public void setPassword(String password) {
         this.password = password;
     }
@@ -96,5 +107,11 @@ public class User {
     }
     public void setRoles(Set<Role> roles){
         this.roles = roles;
+    }
+    public Set<Home> getHomes(){
+        return homes;
+    }
+    public void setHomes(Set<Home> homes){
+        this.homes = homes;
     }
 }
