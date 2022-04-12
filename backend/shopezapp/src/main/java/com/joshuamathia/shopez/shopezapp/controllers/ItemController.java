@@ -36,7 +36,6 @@ public class ItemController {
     public ResponseEntity<List<Item>> getAllItems(@RequestParam(required = false) String title)
     {
         try {
-
             List<Item> items = new ArrayList<>();
             if(title == null) {
                 itemRepository.findAll().forEach(items::add);
