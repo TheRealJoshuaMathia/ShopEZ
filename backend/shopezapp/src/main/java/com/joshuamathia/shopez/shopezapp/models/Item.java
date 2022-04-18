@@ -4,15 +4,32 @@ package com.joshuamathia.shopez.shopezapp.models;
  */
 
  import javax.persistence.Entity;
- import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
  import javax.persistence.GenerationType;
  import javax.persistence.Id;
- import javax.persistence.Table;
- import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import java.io.Serializable;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
  @Entity
  @Table(name="items")
-public class Item {
+
+public class Item implements Serializable{
+
+    
+    @ManyToOne(targetEntity = ShoppingList.class,
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+            @JoinColumn(name="shoppingList_id")
+    private ShoppingList shoppingList;
+
     @Id
     @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,6 +42,10 @@ public class Item {
     private String catagory;
     @Column(name="store")
     private String store;
+    @Column(name="quantity")
+    private int quantity;
+
+
 
     // Need to figure out how to edit the quantity of the item
     // Will a copy of the object need to be made within ShoppingList class ??
@@ -32,6 +53,10 @@ public class Item {
     // private Integer quantity;
 
     public Item() {
+    }
+
+    public Item(Item item ){
+
     }
 
     public Item(String title, String type, String catagory, String store) {
@@ -78,5 +103,11 @@ public class Item {
     
     public void setStore(String store) {
        this.store = store;
+    }
+    public int getQuantity(){
+        return quantity;
+    }
+    public void setQuantity(int quantity){
+        this.quantity = quantity;
     }
 }

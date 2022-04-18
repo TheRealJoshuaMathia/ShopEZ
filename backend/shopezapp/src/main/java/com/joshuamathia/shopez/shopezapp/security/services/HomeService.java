@@ -7,8 +7,6 @@ import javax.naming.NameNotFoundException;
 
 import com.joshuamathia.shopez.shopezapp.models.Home;
 import com.joshuamathia.shopez.shopezapp.repository.HomeRepository;
-import com.joshuamathia.shopez.shopezapp.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +14,6 @@ import org.springframework.stereotype.Service;
 public class HomeService {
     @Autowired
     HomeRepository homeRepository;
-    @Autowired
-    UserRepository userRepository;
    
     // Will need to make a user service so the serivce can be referenced?
 
