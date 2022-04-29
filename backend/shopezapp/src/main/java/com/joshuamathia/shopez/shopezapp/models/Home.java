@@ -22,8 +22,8 @@ import javax.persistence.FetchType;
 @Table(name = "homes")
 public class Home {
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false)
     private long id;
 
     @Column(name="name")
@@ -32,11 +32,14 @@ public class Home {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_homes",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name="home_id")
+            joinColumns = @JoinColumn(name = "home_id"),
+            inverseJoinColumns = @JoinColumn(name="user_id")
     )
     @JsonIgnoreProperties("homes")
-   private List<User> users = new ArrayList<>();
+   private List<User> userHomesList = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "shoppingList")
+//    private List<ShoppingList> homeShoppingLists = new ArrayList<>();
 
     //Home Class Methods
     public Home() {
@@ -45,10 +48,10 @@ public class Home {
     public Home(String name) {
         this.name = name;
     }
-    public Long getId(){
+    public long getId(){
         return id;
     }
-    public Long setId(Long id){
+    public long setId(long id){
         return id;
     }
     public String getName(){
@@ -59,9 +62,18 @@ public class Home {
     }
     @JsonIgnore
     public List<User> getUsers(){
-        return users;
+        return userHomesList;
     }
     public void setUsers(List<User> users) {
-        this.users = users;
+        this.userHomesList = users;
     }
+
+//     public List<ShoppingList> getHomeShoppingLists() {
+//         return homeShoppingLists;
+//     }
+
+//     public void setHomeShoppingLists(List<ShoppingList> homeShoppingLists) {
+//         this.homeShoppingLists = homeShoppingLists;
+//     }
+// }
 }

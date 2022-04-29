@@ -18,7 +18,7 @@ public class TokenRefreshResponse {
         return refreshToken;
     }
     void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+        this.refreshToken = refreshToken;    
     }
     public String getTokenType(){
         return tokenType;

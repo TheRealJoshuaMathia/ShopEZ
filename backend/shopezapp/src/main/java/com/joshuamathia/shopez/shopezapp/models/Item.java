@@ -3,50 +3,51 @@ package com.joshuamathia.shopez.shopezapp.models;
  * Item
  */
 
- import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
- import javax.persistence.GenerationType;
- import javax.persistence.Id;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 
  @Entity
  @Table(name="items")
 
 public class Item implements Serializable{
-
     
-    @ManyToOne(targetEntity = ShoppingList.class,
-            fetch = FetchType.LAZY,
-            cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-            @JoinColumn(name="shoppingList_id")
-    private ShoppingList shoppingList;
+    // @ManyToOne(targetEntity = ShoppingList.class,
+    //         fetch = FetchType.LAZY,
+    //         cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    //         @JoinColumn(name="shoppingList_id")
+    // private ShoppingList shoppingList;
 
     @Id
-    @Column(name="id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id", unique = true)
     private long id;
     @Column(name="title")
     private String title;
-    @Column(name="type")
+    @Column(name="type", nullable = true)
     private String type;
-    @Column(name="catagory")
+    @Column(name="catagory", nullable = true)
     private String catagory;
     @Column(name="store")
     private String store;
-    @Column(name="quantity")
+    @Column(name="quantity", nullable = true)
     private int quantity;
 
-
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shoppinglist_id", insertable = false, updatable = false)
+    //@JsonIgnoreProperties("shoppingList")
+    private ShoppingList shoppingList;
     // Need to figure out how to edit the quantity of the item
     // Will a copy of the object need to be made within ShoppingList class ??
     // @Column(name="column")
@@ -109,5 +110,14 @@ public class Item implements Serializable{
     }
     public void setQuantity(int quantity){
         this.quantity = quantity;
+    }
+
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    public ShoppingList getShoppingList(){
+        return shoppingList;
+    }
+    public void setShoppingList(ShoppingList shoppingList){
+        this.shoppingList = shoppingList;
     }
 }

@@ -16,7 +16,6 @@ public class CreateShoppingListRequest {
     private String title;
     @JsonRawValue
     private List<Item> shoppingList = new ArrayList<>();
-    
 
     public String getTitle(){
         return title;

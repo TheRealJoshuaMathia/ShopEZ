@@ -66,9 +66,8 @@ public class ItemController {
     @PostMapping("/items")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
         try {
-            Item _item = itemRepository
-                .save(new Item(item.getTitle(), item.getType(), item.getCatagory(), item.getStore()));
-            return new ResponseEntity<>(_item, HttpStatus.CREATED);
+            item = itemRepository.save(item);
+            return new ResponseEntity<>(item, HttpStatus.CREATED);
         } catch (Exception e) {
            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

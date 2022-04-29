@@ -1,13 +1,12 @@
 package com.joshuamathia.shopez.shopezapp.controllers;
 
 import com.joshuamathia.shopez.shopezapp.repository.ItemRepository;
-import com.joshuamathia.shopez.shopezapp.repository.ShoppingListRepository;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.joshuamathia.shopez.shopezapp.security.services.ShoppingListServiceImpl;
+
 import java.util.Optional;
 
-import com.joshuamathia.shopez.shopezapp.models.Item;
+
 import com.joshuamathia.shopez.shopezapp.models.ShoppingList;
 import com.joshuamathia.shopez.shopezapp.payload.request.CreateShoppingListRequest;
 
@@ -29,12 +28,12 @@ public class ShoppingListController {
     @Autowired
     ItemRepository itemRepository;
     @Autowired
-    ShoppingListRepository shoppingListRepository;
+    ShoppingListServiceImpl shoppingListServiceImpl;
 
     @GetMapping("/display/{id}")
-    public ResponseEntity<ShoppingList> showList(@PathVariable("id") int id){
+    public ResponseEntity<ShoppingList> showList(@PathVariable("id") long id){
         
-        Optional<ShoppingList> shoppingList = shoppingListRepository.findById(id);
+        Optional<ShoppingList> shoppingList = shoppingListServiceImpl.findByShoppingListId(id);
 
         if(shoppingList.isPresent()){
             return new ResponseEntity<>(shoppingList.get(), HttpStatus.OK);
@@ -48,18 +47,8 @@ public class ShoppingListController {
     public ResponseEntity <ShoppingList> createShoppingList(@RequestBody CreateShoppingListRequest shoppingListRequest) {
         
         try {
-          
-            List<Item> shoppingList = new ArrayList<>();
-            for(Item item: shoppingListRequest.getItems()){
-                Item newItem = item;
-                shoppingList.add(newItem);
-            }
-            ShoppingList _shoppingList = new ShoppingList();
+            ShoppingList _shoppingList = shoppingListServiceImpl.saveShoppingList(shoppingListRequest.getTitle(), shoppingListRequest.getItems());
 
-            _shoppingList.setTitle(shoppingListRequest.getTitle());
-            _shoppingList.setShoppingList(shoppingList);
-
-            shoppingListRepository.save(_shoppingList);
             return new ResponseEntity<>(_shoppingList, HttpStatus.OK);
         } catch (Exception e ){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
