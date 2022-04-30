@@ -4,16 +4,20 @@ package com.joshuamathia.shopez.shopezapp.models;
  */
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,10 +48,24 @@ public class Item implements Serializable{
     @Column(name="quantity", nullable = true)
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "shoppinglist_id", insertable = false, updatable = false)
-    //@JsonIgnoreProperties("shoppingList")
-    private ShoppingList shoppingList;
+    
+     @ManyToMany(fetch = FetchType.LAZY,
+    cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    }, 
+    mappedBy = "itemList")
+    @JsonIgnore
+    private List<ShoppingList> itemList = new ArrayList<>();
+
+    public List<ShoppingList> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List <ShoppingList> itemList) {
+        this.itemList = itemList;
+    }
+
     // Need to figure out how to edit the quantity of the item
     // Will a copy of the object need to be made within ShoppingList class ??
     // @Column(name="column")
@@ -112,12 +130,12 @@ public class Item implements Serializable{
         this.quantity = quantity;
     }
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "item_id", insertable = false, updatable = false)
-    public ShoppingList getShoppingList(){
-        return shoppingList;
-    }
-    public void setShoppingList(ShoppingList shoppingList){
-        this.shoppingList = shoppingList;
-    }
+    // // @ManyToOne(fetch = FetchType.LAZY)
+    // // @JoinColumn(name = "item_id", insertable = false, updatable = false)
+    // public ShoppingList getShoppingList(){
+    //     return shoppingList;
+    // }
+    // public void setShoppingList(ShoppingList shoppingList){
+    //     this.shoppingList = shoppingList;
+    // }
 }

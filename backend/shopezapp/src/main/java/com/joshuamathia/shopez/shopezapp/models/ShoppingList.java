@@ -5,14 +5,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -35,26 +37,32 @@ public class ShoppingList {
   
     //@JsonIgnoreProperties("item")
 
-    @ElementCollection
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingList")
-    @JsonIgnoreProperties("shoppingList")
-    private List<Item> shoppingList = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+    cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(name = "shoppinglist_items",
+        joinColumns = {@JoinColumn(name = "shoppinglist_id")},
+        inverseJoinColumns = { @JoinColumn(name = "item_id") })
+    @JsonIgnoreProperties("shoppinglists")
+    private List<Item> itemList = new ArrayList<>();
 
     public void addItem(Item item) {
-        item.setShoppingList(this);
-        shoppingList.add(item);
+        itemList.add(item);
     }
 
-    public void removeItem(Item item) {
-        shoppingList.remove(item);
-    }
+    // public void removeItem(Item item) {
+    //     shoppingList.remove(item);
+    // }
 
     public ShoppingList(){
     }
 
     public ShoppingList(String title, List<Item> itemList){
         this.title = title;
-        this.shoppingList = itemList;
+        this.itemList = itemList;
     }
 
     public long getId(){
@@ -81,10 +89,10 @@ public class ShoppingList {
     // }
 
     public void setShoppingList(List<Item> shoppingList){
-        this.shoppingList = shoppingList;
+        this.itemList = shoppingList;
     }
    
     public List<Item> getShoppingList() {
-        return shoppingList;
+        return itemList;
     }
 }
