@@ -9,5 +9,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface ShoppingListService {
     public ShoppingList saveShoppingList(String title, List<Item> items);
-    public Optional<ShoppingList> findByShoppingListId(long listId);
+    public Optional<ShoppingList> findById(long id);
 }

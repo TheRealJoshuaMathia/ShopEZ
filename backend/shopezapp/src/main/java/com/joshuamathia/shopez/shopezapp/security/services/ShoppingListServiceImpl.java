@@ -23,7 +23,6 @@ public class ShoppingListServiceImpl implements ShoppingListService{
         ShoppingList shoppingList = new ShoppingList();
         List<Item> itemList = new ArrayList<>();
 
-        
         for(Item item : items){
             itemList.add(item);
         }
@@ -35,7 +34,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
         return shoppingList;
     }
 
-    public Optional<ShoppingList> findByShoppingListId(long listId){
-      return shoppingListRepository.findByShoppingListId(listId);
+    public Optional<ShoppingList> findById(long id){
+      return shoppingListRepository.findById(id);
     }
 }

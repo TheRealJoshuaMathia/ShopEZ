@@ -1,12 +1,10 @@
 package com.joshuamathia.shopez.shopezapp.controllers;
 
-import com.joshuamathia.shopez.shopezapp.repository.ItemRepository;
-
+import com.joshuamathia.shopez.shopezapp.security.services.ItemServiceImpl;
 import com.joshuamathia.shopez.shopezapp.security.services.ShoppingListServiceImpl;
-
 import java.util.Optional;
 
-
+import com.joshuamathia.shopez.shopezapp.models.Item;
 import com.joshuamathia.shopez.shopezapp.models.ShoppingList;
 import com.joshuamathia.shopez.shopezapp.payload.request.CreateShoppingListRequest;
 
@@ -25,15 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/api/list")
 public class ShoppingListController {
+
     @Autowired
-    ItemRepository itemRepository;
+    ItemServiceImpl itemServiceImpl;
     @Autowired
     ShoppingListServiceImpl shoppingListServiceImpl;
 
     @GetMapping("/display/{id}")
     public ResponseEntity<ShoppingList> showList(@PathVariable("id") long id){
         
-        Optional<ShoppingList> shoppingList = shoppingListServiceImpl.findByShoppingListId(id);
+        Optional<ShoppingList> shoppingList = shoppingListServiceImpl.findById(id);
 
         if(shoppingList.isPresent()){
             return new ResponseEntity<>(shoppingList.get(), HttpStatus.OK);
@@ -47,11 +46,23 @@ public class ShoppingListController {
     public ResponseEntity <ShoppingList> createShoppingList(@RequestBody CreateShoppingListRequest shoppingListRequest) {
         
         try {
-            ShoppingList _shoppingList = shoppingListServiceImpl.saveShoppingList(shoppingListRequest.getTitle(), shoppingListRequest.getItems());
+            ShoppingList _shoppingList = new ShoppingList();         
+            for (Item item : shoppingListRequest.getItems()) {
+
+                String title = item.getTitle();
+                Optional<Item> searchedItem = itemServiceImpl.findByTitle(title);
+                if (searchedItem.isPresent()) {
+                    item = searchedItem.get();
+                    _shoppingList.addItem(item);
+                }
+            }
+            _shoppingList = shoppingListServiceImpl.saveShoppingList(shoppingListRequest.getTitle(),
+                    _shoppingList.getShoppingList());
 
             return new ResponseEntity<>(_shoppingList, HttpStatus.OK);
         } catch (Exception e ){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

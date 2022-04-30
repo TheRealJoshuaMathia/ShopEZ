@@ -33,7 +33,7 @@ public class Role {
     cascade = {
         CascadeType.PERSIST,
         CascadeType.MERGE
-    },
+    }, 
     mappedBy = "roles")
     @JsonIgnore
     private Set<User> userRoles = new HashSet<>();

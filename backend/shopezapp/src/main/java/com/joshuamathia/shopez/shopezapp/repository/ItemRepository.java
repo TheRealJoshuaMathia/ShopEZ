@@ -11,5 +11,8 @@ import com.joshuamathia.shopez.shopezapp.models.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
     public List<Item> findByTitleContaining(String title);
+
+    public Optional<Item> findByTitle(String title);
     public Optional<Item> findById(long id);
+    
 }

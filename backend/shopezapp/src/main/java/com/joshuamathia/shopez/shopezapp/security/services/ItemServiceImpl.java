@@ -7,7 +7,9 @@ import com.joshuamathia.shopez.shopezapp.models.Item;
 import com.joshuamathia.shopez.shopezapp.repository.ItemRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemRepository itemRepository;
@@ -16,9 +18,15 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findByTitleContaining(title);
         
     }
-    public Optional<Item> findById(long id){
+
+    public Optional<Item> findById(long id) {
         return itemRepository.findById(id);
     }
+
+    public Optional<Item> findByTitle(String title) {
+        return itemRepository.findByTitle(title);
+    }
+    
     public Item saveItem(Item item){
 
         Item _item = new Item();

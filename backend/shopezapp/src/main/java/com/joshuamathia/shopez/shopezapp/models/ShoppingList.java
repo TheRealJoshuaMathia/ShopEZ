@@ -7,14 +7,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "shoppinglists")
@@ -36,8 +36,18 @@ public class ShoppingList {
     //@JsonIgnoreProperties("item")
 
     @ElementCollection
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingList")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingList")
+    @JsonIgnoreProperties("shoppingList")
     private List<Item> shoppingList = new ArrayList<>();
+
+    public void addItem(Item item) {
+        item.setShoppingList(this);
+        shoppingList.add(item);
+    }
+
+    public void removeItem(Item item) {
+        shoppingList.remove(item);
+    }
 
     public ShoppingList(){
     }

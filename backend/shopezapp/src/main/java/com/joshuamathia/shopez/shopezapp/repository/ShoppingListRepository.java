@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShoppingListRepository extends JpaRepository<ShoppingList, Long> {
     Optional<ShoppingList> findByTitle(String title);
-    Optional<ShoppingList> findByShoppingListId(long id);
+    Optional<ShoppingList> findById(long id);
     Boolean existsByTitle(String title);
 }
