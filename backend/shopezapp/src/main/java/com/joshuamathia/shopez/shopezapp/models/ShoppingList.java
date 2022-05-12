@@ -48,6 +48,12 @@ public class ShoppingList {
         inverseJoinColumns = { @JoinColumn(name = "item_id") })
     @JsonIgnoreProperties("shoppinglists")
     private List<Item> itemList = new ArrayList<>();
+    
+
+    //Change this to a Set??
+
+    @ManyToMany(mappedBy = "homeShoppingLists")
+    private List<Home> shoppingListHomes = new ArrayList<>();
 
     public void addItem(Item item) {
         itemList.add(item);
@@ -95,4 +101,13 @@ public class ShoppingList {
     public List<Item> getShoppingList() {
         return itemList;
     }
+
+    public List<Home> getShoppingListHomes() {
+        return shoppingListHomes;
+    }
+
+    public void setShoppingListhomes(List<Home> shoppingListHomes) {
+        this.shoppingListHomes = shoppingListHomes;
+    }
+
 }

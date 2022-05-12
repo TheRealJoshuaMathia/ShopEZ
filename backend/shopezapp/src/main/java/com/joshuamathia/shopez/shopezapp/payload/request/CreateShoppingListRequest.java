@@ -13,9 +13,20 @@ public class CreateShoppingListRequest {
     
     @JsonRawValue
     @NotBlank
+    private String homeName;
+    @JsonRawValue
+    @NotBlank
     private String title;
     @JsonRawValue
     private List<Item> shoppingList = new ArrayList<>();
+
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
+    }
 
     public String getTitle(){
         return title;

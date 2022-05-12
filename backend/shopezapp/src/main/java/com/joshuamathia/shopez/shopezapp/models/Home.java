@@ -10,6 +10,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,7 @@ public class Home {
     @Column(name="name")
     private String name;
 
+     @Fetch(value = FetchMode.SUBSELECT)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_homes",
@@ -36,10 +40,17 @@ public class Home {
             inverseJoinColumns = @JoinColumn(name="user_id")
     )
     @JsonIgnoreProperties("homes")
-   private List<User> userHomesList = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "shoppingList")
-//    private List<ShoppingList> homeShoppingLists = new ArrayList<>();
+   
+    private List<User> userHomesList = new ArrayList<>();
+   
+    @Fetch(value = FetchMode.SUBSELECT)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "home_shoppinglists",
+            joinColumns = @JoinColumn(name = "home_id"),
+            inverseJoinColumns = @JoinColumn(name = "shoppinglist_id")
+    )
+    private List<ShoppingList> homeShoppingLists = new ArrayList<>();
 
     //Home Class Methods
     public Home() {
@@ -68,12 +79,11 @@ public class Home {
         this.userHomesList = users;
     }
 
-//     public List<ShoppingList> getHomeShoppingLists() {
-//         return homeShoppingLists;
-//     }
+    public List<ShoppingList> getHomeShoppingLists() {
+        return homeShoppingLists;
+    }
 
-//     public void setHomeShoppingLists(List<ShoppingList> homeShoppingLists) {
-//         this.homeShoppingLists = homeShoppingLists;
-//     }
-// }
+    public void setHomeShoppingLists(List<ShoppingList> homeShoppingLists) {
+        this.homeShoppingLists = homeShoppingLists;
+    }
 }

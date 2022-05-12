@@ -23,11 +23,8 @@ public class HomeService {
     public Boolean existsByName(String name){
         return homeRepository.existsByName(name);
     }
-    public List<Home> findByNameContaining(String name){
+
+    public List<Home> findByNameContaining(String name) {
         return homeRepository.findByNameContaining(name);
     }
-
-    // public Optional<Home> findbyUsername(String username) {
-    //     return homeRepository.findby
-    // }
 }

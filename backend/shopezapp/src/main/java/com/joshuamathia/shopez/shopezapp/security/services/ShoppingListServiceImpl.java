@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.joshuamathia.shopez.shopezapp.models.Home;
 import com.joshuamathia.shopez.shopezapp.models.Item;
 import com.joshuamathia.shopez.shopezapp.models.ShoppingList;
 import com.joshuamathia.shopez.shopezapp.repository.ShoppingListRepository;
@@ -18,10 +19,13 @@ public class ShoppingListServiceImpl implements ShoppingListService{
     @Autowired
     ShoppingListRepository shoppingListRepository;
 
-    public ShoppingList saveShoppingList(String title, List<Item> items){
+    public ShoppingList saveShoppingList(Optional<Home> requestedHome , String title, List<Item> items){
         
         ShoppingList shoppingList = new ShoppingList();
         List<Item> itemList = new ArrayList<>();
+
+        List<Home> homes = new ArrayList<>();
+        homes.add(requestedHome.get());
 
         for(Item item : items){
             itemList.add(item);
@@ -29,6 +33,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
 
         shoppingList.setTitle(title);
         shoppingList.setShoppingList(itemList);
+        shoppingList.setShoppingListhomes(homes);
         shoppingList = shoppingListRepository.save(shoppingList);
 
         return shoppingList;
