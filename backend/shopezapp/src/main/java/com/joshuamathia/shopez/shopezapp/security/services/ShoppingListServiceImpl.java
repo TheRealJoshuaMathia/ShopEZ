@@ -34,6 +34,7 @@ public class ShoppingListServiceImpl implements ShoppingListService{
         shoppingList.setTitle(title);
         shoppingList.setShoppingList(itemList);
         shoppingList.setShoppingListhomes(homes);
+
         shoppingList = shoppingListRepository.save(shoppingList);
 
         return shoppingList;

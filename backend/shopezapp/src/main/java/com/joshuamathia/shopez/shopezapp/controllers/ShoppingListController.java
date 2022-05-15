@@ -16,6 +16,7 @@ import com.joshuamathia.shopez.shopezapp.models.Item;
 import com.joshuamathia.shopez.shopezapp.models.ShoppingList;
 import com.joshuamathia.shopez.shopezapp.models.User;
 import com.joshuamathia.shopez.shopezapp.payload.request.CreateShoppingListRequest;
+import com.joshuamathia.shopez.shopezapp.repository.HomeRepository;
 import com.joshuamathia.shopez.shopezapp.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class ShoppingListController {
 
     @Autowired
     HomeService homeService;
+
+    @Autowired
+    HomeRepository homeRepository;
 
     @Autowired
     UserRepository userRepository;
@@ -89,12 +93,22 @@ public class ShoppingListController {
                         _shoppingList.addItem(item);
                     }
                 }
-                List<Home> shoppingListHomes = new ArrayList<>();
-                shoppingListHomes.add(requestedHome.get());
-                _shoppingList.setShoppingListhomes(shoppingListHomes);
+             
                 _shoppingList = shoppingListServiceImpl.saveShoppingList(requestedHome, shoppingListRequest.getTitle(),
                         _shoppingList.getShoppingList());
-                
+
+                        Home _home = requestedHome.get();
+                        List<ShoppingList> homeShoppingLists = new ArrayList<>();
+
+                        if(_home.getHomeShoppingLists().isEmpty()){
+                            homeShoppingLists.add(_shoppingList);
+                        }
+                        else {
+                            homeShoppingLists = _home.getHomeShoppingLists();
+                            homeShoppingLists.add(_shoppingList);
+                        }
+                        _home.setHomeShoppingLists(homeShoppingLists);
+                        homeRepository.save(_home);
         
                 return new ResponseEntity<>(_shoppingList, HttpStatus.OK);
             }

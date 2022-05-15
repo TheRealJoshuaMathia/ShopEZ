@@ -50,6 +50,7 @@ public class Home {
             joinColumns = @JoinColumn(name = "home_id"),
             inverseJoinColumns = @JoinColumn(name = "shoppinglist_id")
     )
+    //@JsonIgnore
     private List<ShoppingList> homeShoppingLists = new ArrayList<>();
 
     //Home Class Methods

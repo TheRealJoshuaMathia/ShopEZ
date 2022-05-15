@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -46,13 +47,15 @@ public class ShoppingList {
     @JoinTable(name = "shoppinglist_items",
         joinColumns = {@JoinColumn(name = "shoppinglist_id")},
         inverseJoinColumns = { @JoinColumn(name = "item_id") })
-    @JsonIgnoreProperties("shoppinglists")
+
+    @JsonIgnore
     private List<Item> itemList = new ArrayList<>();
     
 
     //Change this to a Set??
 
     @ManyToMany(mappedBy = "homeShoppingLists")
+    @JsonIgnore 
     private List<Home> shoppingListHomes = new ArrayList<>();
 
     public void addItem(Item item) {
