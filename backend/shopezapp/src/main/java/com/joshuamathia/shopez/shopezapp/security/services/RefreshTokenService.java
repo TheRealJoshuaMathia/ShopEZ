@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.joshuamathia.shopez.shopezapp.exception.TokenRefreshException;
 import com.joshuamathia.shopez.shopezapp.models.RefreshToken;
+import com.joshuamathia.shopez.shopezapp.models.User;
 import com.joshuamathia.shopez.shopezapp.repository.RefreshTokenRepository;
 import com.joshuamathia.shopez.shopezapp.repository.UserRepository;
 
@@ -45,8 +46,8 @@ public class RefreshTokenService {
     return token;
   }
 
-  @Transactional
-  public int deleteByUserId(long userId) {
-    return refreshTokenRepository.deleteByUser(userRepository.findById(userId).get());
-  }
+  // @Transactional
+  // public int deleteByUserName(String username) {
+  //   return refreshTokenRepository.deleteByUser(username);
+  // }
 }
