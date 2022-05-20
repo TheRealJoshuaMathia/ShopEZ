@@ -13,6 +13,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.joshuamathia.shopez.shopezapp.security.jwt.AuthEntryPointJwt;
 import com.joshuamathia.shopez.shopezapp.security.jwt.AuthTokenFilter;
@@ -62,6 +64,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .authorizeRequests().antMatchers("/api/auth/**").permitAll()
       .antMatchers("/api/test/**").permitAll()
       .anyRequest().authenticated();
+    
+      http.logout()
+      .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+
+      // http.logout(logout-> logout
+      //   .logoutUrl("/logout")
+      //   .logoutSuccessUrl("/home")
+      //   .invalidateHttpSession(true)
+      //   );
 
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
   }

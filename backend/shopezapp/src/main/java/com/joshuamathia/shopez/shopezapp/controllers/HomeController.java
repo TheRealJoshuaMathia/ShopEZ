@@ -9,15 +9,12 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import com.joshuamathia.shopez.shopezapp.models.Home;
-import com.joshuamathia.shopez.shopezapp.models.ShoppingList;
 import com.joshuamathia.shopez.shopezapp.models.User;
 import com.joshuamathia.shopez.shopezapp.payload.request.AddUserRequest;
 import com.joshuamathia.shopez.shopezapp.payload.response.MessageResponse;
 import com.joshuamathia.shopez.shopezapp.repository.UserRepository;
-import com.joshuamathia.shopez.shopezapp.security.services.HomeService;
 import com.joshuamathia.shopez.shopezapp.repository.HomeRepository;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,7 +87,7 @@ public class HomeController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    // Creates a home
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Home> createHome(@RequestBody Home home) {
