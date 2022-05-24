@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 
-import Footer from "./components/Footer";
+//import Footer from "./components/Footer";
 // import AuthVerify from "./common/AuthVerify";
-// import EventBus from "./common/EventBus";
+import EventBus from "./common/EventBus";
 
 // Route components
 import Home from "./routes/Home";
@@ -33,7 +33,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AuthVerify from "./common/AuthVerify";
 
 const appStyles = createTheme({
   components: {
@@ -96,12 +95,12 @@ const App = () => {
       setShowShopperBoard(user.roles.includes("ROLE_SHOPPER"));
       setShowUserBoard(user.roles.includes("ROLE_USER"));
     }
-    // EventBus.on("logout", () => {
-    //   logOut();
-    // });
-    // return () => {
-    //   EventBus.remove("logout");
-    // };
+    EventBus.on("logout", () => {
+      logOut();
+    });
+    return () => {
+      EventBus.remove("logout");
+    };
   }, []);
 
   const logOut = () => {
@@ -181,66 +180,99 @@ const App = () => {
                     <MenuItem onClick={handleCloseNavMenu}>
                       <Typography>
                         <div className="link">
-                          <Link to={"/login"}>Login</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/register"}>Register</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
                           <Link to={"/home"}>Home</Link>
                         </div>
                       </Typography>
                     </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/profile"}>Profile</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
+                    {currentUser ? (
+                      <div>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/profile"}>
+                                {currentUser.username}
+                              </Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <a href="/login" onClick={logOut}>
+                                LogOut
+                              </a>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                      </div>
+                    ) : (
+                      <div>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/login"}>Login</Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/register"}>Sign Up</Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                      </div>
+                    )}
+
+                    {/* Comeback and figure out how to display based off or roles */}
+
+                    {/* <MenuItem onClick={handleCloseNavMenu}>
                       <Typography>
                         <div className="link">
                           <Link to={"/items"}>Items</Link>
                         </div>
                       </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/admin"}>Admin Board</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/user"}>User Board</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/shopper"}>Shopper Board</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/caregiver"}>Caregiver Board</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
+                    </MenuItem> */}
+
+                    {showAdminBoard && (
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/admin"}>Admin Board</Link>
+                          </div>
+                        </Typography>
+                      </MenuItem>
+                    )}
+
+                    {showUserBoard && (
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/user"}>User Board</Link>
+                          </div>
+                        </Typography>
+                      </MenuItem>
+                    )}
+
+                    {showShopperBoard && (
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/shopper"}>Shopper Board</Link>
+                          </div>
+                        </Typography>
+                      </MenuItem>
+                    )}
+
+                    {showCaregiverBoard && (
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/caregiver"}>Caregiver Board</Link>
+                          </div>
+                        </Typography>
+                      </MenuItem>
+                    )}
                   </Menu>
                 </Box>
                 <Typography
@@ -253,27 +285,10 @@ const App = () => {
                     <Link to="/">ShopEZ</Link>
                   </div>
                 </Typography>
+
+                {/* ---------------------------------------- Navbar component start ---------------------------------------------------- */}
+
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/login"}>Login</Link>
-                      </div>
-                    </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/register"}>Register</Link>
-                      </div>
-                    </Typography>
-                  </Button>
                   <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
@@ -284,16 +299,56 @@ const App = () => {
                       </div>
                     </Typography>
                   </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/profile"}>Profile</Link>
-                      </div>
-                    </Typography>
-                  </Button>
+                  {currentUser ? (
+                    <div>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "inline-block" }}
+                      >
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/profile"}>{currentUser.username}</Link>
+                          </div>
+                        </Typography>
+                      </Button>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "incline-block" }}
+                      >
+                        <Typography>
+                          <div className="link">
+                            <a href="/login" onClick={logOut}>
+                              LogOut
+                            </a>
+                          </div>
+                        </Typography>
+                      </Button>
+                    </div>
+                  ) : (
+                    <div>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "incline-block" }}
+                      >
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/login"}>Login</Link>
+                          </div>
+                        </Typography>
+                      </Button>
+                      <Button
+                        onClick={handleCloseNavMenu}
+                        sx={{ my: 2, color: "white", display: "incline-block" }}
+                      >
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/register"}>Sign Up</Link>
+                          </div>
+                        </Typography>
+                      </Button>
+                    </div>
+                  )}
+                  {/* 
                   <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
@@ -303,57 +358,57 @@ const App = () => {
                         <Link to={"/items"}>Items</Link>
                       </div>
                     </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/admin"}>Admin Board</Link>
-                      </div>
-                    </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/admin"}>Admin Board</Link>
-                      </div>
-                    </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/user"}>User Board</Link>
-                      </div>
-                    </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/shopper"}>Shopper Board</Link>
-                      </div>
-                    </Typography>
-                  </Button>
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/caregiver"}>Caregiver Board</Link>
-                      </div>
-                    </Typography>
-                  </Button>
+                  </Button> */}
+
+                  {showAdminBoard && (
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      <Typography>
+                        <div className="link">
+                          <Link to={"/admin"}>Admin Board</Link>
+                        </div>
+                      </Typography>
+                    </Button>
+                  )}
+                  {showUserBoard && (
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      <Typography>
+                        <div className="link">
+                          <Link to={"/user"}>User Board</Link>
+                        </div>
+                      </Typography>
+                    </Button>
+                  )}
+
+                  {showShopperBoard && (
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      <Typography>
+                        <div className="link">
+                          <Link to={"/shopper"}>Shopper Board</Link>
+                        </div>
+                      </Typography>
+                    </Button>
+                  )}
+                  {showCaregiverBoard && (
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      <Typography>
+                        <div className="link">
+                          <Link to={"/caregiver"}>Caregiver Board</Link>
+                        </div>
+                      </Typography>
+                    </Button>
+                  )}
                 </Box>
 
                 <Box sx={{ flexGrow: 0 }}>
@@ -389,11 +444,11 @@ const App = () => {
         </ThemeProvider>
         <div className="routes">
           <Routes>
-            <Route exact path={"/"} element={<Home />} />
-            <Route exact path={"/home"} element={<Home />} />
-            <Route exact path="/login" element={<Login />} />
-            <Route exact path="/register" element={<Register />} />
-            <Route exact path="/profile" element={<Profile />} />
+            <Route path={"/"} element={<Home />} />
+            <Route path={"/home"} element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/user" element={<BoardUser />} />
             <Route path="/admin" element={<BoardAdmin />} />
             <Route path="/caregiver" element={<BoardCaregiver />} />
@@ -404,7 +459,6 @@ const App = () => {
             <Route path="/items/:id" element={<Item />} />
           </Routes>
         </div>
-        {/* {<AuthVerify logOut={logOut}/>} */}
       </div>
     </ThemeProvider>
   );
