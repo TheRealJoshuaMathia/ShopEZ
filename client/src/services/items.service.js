@@ -1,22 +1,26 @@
-import http from "../axiosLoader";
+import axios from "axios";
+import authHeader from "./auth.header";
+const API_URL = "http://localhost:8080/api/auth/";
 
 const getAll = () => {
-  return http.get("/items");
+  return axios.get(API_URL + "items", { headers: authHeader() });
 };
 const get = (id) => {
-  return http.get(`/items/${id}`);
+  return axios.get(API_URL + `items/${id}`, { headers: authHeader() });
 };
 const create = (data) => {
-  return http.post("/items", data);
+  return axios.post(API_URL + "items", data, { headers: authHeader() });
 };
 const update = (id, data) => {
-  return http.put(`/items/${id}`, data);
+  return axios.put(API_URL + `items/${id}`, data, { headers: authHeader() });
 };
 const remove = (id) => {
-  return http.delete(`/items/${id}`);
+  return axios.delete(API_URL + `items/${id}`, { headers: authHeader() });
 };
 const findByTitle = (title) => {
-  return http.get(`/items?title=${title}`);
+  return axios.get(API_URL + `items?title=${title}`, {
+    headers: authHeader(),
+  });
 };
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

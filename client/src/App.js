@@ -224,15 +224,13 @@ const App = () => {
                       </div>
                     )}
 
-                    {/* Comeback and figure out how to display based off or roles */}
-
-                    {/* <MenuItem onClick={handleCloseNavMenu}>
+                    <MenuItem onClick={handleCloseNavMenu}>
                       <Typography>
                         <div className="link">
                           <Link to={"/items"}>Items</Link>
                         </div>
                       </Typography>
-                    </MenuItem> */}
+                    </MenuItem>
 
                     {showAdminBoard && (
                       <MenuItem onClick={handleCloseNavMenu}>
@@ -348,7 +346,7 @@ const App = () => {
                       </Button>
                     </div>
                   )}
-                  {/* 
+
                   <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
@@ -358,7 +356,7 @@ const App = () => {
                         <Link to={"/items"}>Items</Link>
                       </div>
                     </Typography>
-                  </Button> */}
+                  </Button>
 
                   {showAdminBoard && (
                     <Button
