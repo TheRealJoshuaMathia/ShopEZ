@@ -204,6 +204,13 @@ const App = () => {
                             </div>
                           </Typography>
                         </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/items"}>Items</Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
                       </div>
                     ) : (
                       <div>
@@ -223,14 +230,6 @@ const App = () => {
                         </MenuItem>
                       </div>
                     )}
-
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/items"}>Items</Link>
-                        </div>
-                      </Typography>
-                    </MenuItem>
 
                     {showAdminBoard && (
                       <MenuItem onClick={handleCloseNavMenu}>
@@ -289,7 +288,7 @@ const App = () => {
                 <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                   <Button
                     onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{ my: 2, color: "white", display: "inline-block" }}
                   >
                     <Typography>
                       <div className="link">
@@ -309,15 +308,14 @@ const App = () => {
                           </div>
                         </Typography>
                       </Button>
+
                       <Button
                         onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: "white", display: "incline-block" }}
+                        sx={{ my: 2, color: "white", display: "inline-block" }}
                       >
                         <Typography>
                           <div className="link">
-                            <a href="/login" onClick={logOut}>
-                              LogOut
-                            </a>
+                            <Link to={"/items"}>Items</Link>
                           </div>
                         </Typography>
                       </Button>
@@ -346,17 +344,6 @@ const App = () => {
                       </Button>
                     </div>
                   )}
-
-                  <Button
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    <Typography>
-                      <div className="link">
-                        <Link to={"/items"}>Items</Link>
-                      </div>
-                    </Typography>
-                  </Button>
 
                   {showAdminBoard && (
                     <Button
@@ -434,6 +421,44 @@ const App = () => {
                     <MenuItem key="setting" onClick={handleCloseUserMenu}>
                       <Typography textAlign="center">wow</Typography>
                     </MenuItem>
+
+                    {currentUser ? (
+                      <MenuItem>
+                        <Button
+                          onClick={handleCloseNavMenu}
+                          sx={{
+                            my: 2,
+                            color: "white",
+                            display: "inline-block",
+                          }}
+                        >
+                          <Typography>
+                            <div className="link">
+                              <a href="/login" onClick={logOut}>
+                                LogOut
+                              </a>
+                            </div>
+                          </Typography>
+                        </Button>
+                      </MenuItem>
+                    ) : (
+                      <div>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/login"}>Login</Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                        <MenuItem onClick={handleCloseNavMenu}>
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/register"}>Sign Up</Link>
+                            </div>
+                          </Typography>
+                        </MenuItem>
+                      </div>
+                    )}
                   </Menu>
                 </Box>
               </Toolbar>

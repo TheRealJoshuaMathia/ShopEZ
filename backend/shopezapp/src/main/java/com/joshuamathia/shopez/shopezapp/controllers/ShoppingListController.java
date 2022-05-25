@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/list")
+@RequestMapping("/api/auth/list")
 public class ShoppingListController {
 
     @Autowired

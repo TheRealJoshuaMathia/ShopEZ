@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/homes")
+@RequestMapping("/api/auth/homes")
 public class HomeController {
 
     @Autowired
