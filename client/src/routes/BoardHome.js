@@ -26,7 +26,7 @@ const BoardHome = () => {
       <ThemeProvider theme={styles}>
          <div className="homeContainer">
             <Grid container justifyContent="center" alignItems="center"
-               sx={{ backgroundColor: "black", color: "white" }}>
+               sx={{ backgroundColor: "black", color: "white", height: "100vh" }}>
                <Grid item>
                   <List>
                      <ListItem>
