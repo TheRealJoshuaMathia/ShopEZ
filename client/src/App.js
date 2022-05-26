@@ -18,6 +18,8 @@ import BoardAdmin from "./routes/BoardAdmin";
 import BoardCaregiver from "./routes/BoardCaregiver";
 import BoardShopper from "./routes/BoardShopper";
 import BoardUser from "./routes/BoardUser";
+import BoardHome from "./routes/BoardHome";
+import ShowHomes from "./routes/ShowHomes";
 
 // Styling Imports
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -86,6 +88,8 @@ const App = () => {
   const [showUserBoard, setShowUserBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
+  const [showBoardHome, setShowBoardHome] = useState(false);
+
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
@@ -94,6 +98,7 @@ const App = () => {
       setShowCaregiverBoard(user.roles.includes("ROLE_CAREGIVER"));
       setShowShopperBoard(user.roles.includes("ROLE_SHOPPER"));
       setShowUserBoard(user.roles.includes("ROLE_USER"));
+      setShowBoardHome(user.roles.includes("ROLE_ADMIN"));
     }
     EventBus.on("logout", () => {
       logOut();
@@ -270,6 +275,16 @@ const App = () => {
                         </Typography>
                       </MenuItem>
                     )}
+
+                    {showBoardHome && (
+                      <MenuItem onClick={handleCloseNavMenu}>
+                        <Typography>
+                          <div className="link">
+                            <Link to={"/boardhome"}>Home Board</Link>
+                          </div>
+                        </Typography>
+                      </MenuItem>
+                    )}
                   </Menu>
                 </Box>
                 <Typography
@@ -394,6 +409,19 @@ const App = () => {
                       </Typography>
                     </Button>
                   )}
+
+                  {showBoardHome && (
+                    <Button
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "white", display: "block" }}
+                    >
+                      <Typography>
+                        <div className="link">
+                          <Link to={"/boardhome"}>Home Board</Link>
+                        </div>
+                      </Typography>
+                    </Button>
+                  )}
                 </Box>
 
                 <Box sx={{ flexGrow: 0 }}>
@@ -476,6 +504,8 @@ const App = () => {
             <Route path="/admin" element={<BoardAdmin />} />
             <Route path="/caregiver" element={<BoardCaregiver />} />
             <Route path="/shopper" element={<BoardShopper />} />
+            <Route path="/boardhome" element={<BoardHome />} />
+            <Route path="/showallhomes" element={<ShowHomes />}> </Route>
 
             <Route path="additem" element={<AddItem />} />
             <Route path="/items" element={<ItemList />} />

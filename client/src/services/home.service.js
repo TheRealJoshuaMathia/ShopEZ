@@ -20,7 +20,7 @@ const addUserToHome = (data) => {
     return axios.post(API_URL + "/adduser", data, { headers: authHeader() });
 }
 
-const getHomeShoppingLists = () => {
+const getHomeShoppingLists = (homename) => {
     return axios.get(API_URL + `showlists/${homename}`, { headers: authHeader() });
 }
 
