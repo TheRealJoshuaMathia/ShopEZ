@@ -28,7 +28,7 @@ import com.joshuamathia.shopez.shopezapp.repository.ItemRepository;
  */
  @RestController
  @CrossOrigin
- @RequestMapping("/api/auth/")
+ @RequestMapping("/api/auth")
 public class ItemController {
     @Autowired
     ItemRepository itemRepository;

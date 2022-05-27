@@ -63,7 +63,7 @@ public class HomeController {
 
     // Return list of homes for the user
 
-    @GetMapping("/{username}")
+    @GetMapping("/userhomes/{username}")
     @PreAuthorize("#username == authentication.principal.username or hasRole('ADMIN')")
     public ResponseEntity<List<Home>> getUserHomes(@PathVariable("username") String username)
     {

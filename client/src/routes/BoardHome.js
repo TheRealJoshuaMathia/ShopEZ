@@ -8,50 +8,49 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import createTheme from "@mui/material/styles/createTheme";
 import { Link } from "react-router-dom";
+import AuthService from "../services/auth.service";
 
 const BoardHome = () => {
-   const styles = createTheme({
-      components: {
-         Grid: {
-            styleOverrides: {
-               root: {
-               },
-            },
-         },
+  const styles = createTheme({
+    components: {
+      Grid: {
+        styleOverrides: {
+          root: {},
+        },
+      },
+    },
+  });
+  const user = AuthService.getCurrentUser();
+  const username = user.username;
 
-      }
-   });
-
-   return (
-      <ThemeProvider theme={styles}>
-         <div className="homeContainer">
-            <Grid container justifyContent="center" alignItems="center"
-               sx={{ backgroundColor: "black", color: "white", height: "100vh" }}>
-               <Grid item>
-                  <List>
-                     <ListItem>
-
-                        <Link to={"/showallHomes"}>
-                           Show
-                        </Link>
-
-                     </ListItem>
-                     <ListItem>
-                        <Typography> Hi</Typography>
-                     </ListItem>
-                     <ListItem>
-                        <Typography> Hi</Typography>
-                     </ListItem>
-                     <ListItem>
-                        <Typography> Hi</Typography>
-                     </ListItem>
-                  </List>
-
-               </Grid>
-            </Grid>
-         </div>
-
-      </ThemeProvider >
-   );
+  return (
+    <ThemeProvider theme={styles}>
+      <div className="homeContainer">
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          sx={{ backgroundColor: "black", color: "white", height: "100vh" }}
+        >
+          <Grid item>
+            <List>
+              <ListItem>
+                <Link to={"/showallHomes"}>Show All Homes</Link>
+              </ListItem>
+              <ListItem>
+                <Link to={`/userhomes/${username}`}>Show User Homes</Link>
+              </ListItem>
+              <ListItem>
+                <Typography> Hi</Typography>
+              </ListItem>
+              <ListItem>
+                <Typography> Hi</Typography>
+              </ListItem>
+            </List>
+          </Grid>
+        </Grid>
+      </div>
+    </ThemeProvider>
+  );
 };
 export default BoardHome;

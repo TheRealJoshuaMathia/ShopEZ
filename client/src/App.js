@@ -20,6 +20,7 @@ import BoardShopper from "./routes/BoardShopper";
 import BoardUser from "./routes/BoardUser";
 import BoardHome from "./routes/BoardHome";
 import ShowHomes from "./routes/ShowHomes";
+import ShowUserHomes from "./routes/ShowUserHomes";
 
 // Styling Imports
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -505,8 +506,9 @@ const App = () => {
             <Route path="/caregiver" element={<BoardCaregiver />} />
             <Route path="/shopper" element={<BoardShopper />} />
             <Route path="/boardhome" element={<BoardHome />} />
-            <Route path="/showallhomes" element={<ShowHomes />}> </Route>
+            <Route path="/showallhomes" element={<ShowHomes />} />
 
+            <Route path="/userhomes/:username" element={<ShowUserHomes />} />
             <Route path="additem" element={<AddItem />} />
             <Route path="/items" element={<ItemList />} />
             <Route path="/items/:id" element={<Item />} />
