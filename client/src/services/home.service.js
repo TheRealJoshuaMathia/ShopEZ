@@ -13,8 +13,8 @@ const getUserHomes = (username) => {
   });
 };
 
-const createHome = (data) => {
-  return axios.post(API_URL + "add", data, { headers: authHeader() });
+const createHome = (homename) => {
+  return axios.post(API_URL + "add", { homename }, { headers: authHeader() });
 };
 
 const addUserToHome = (data) => {

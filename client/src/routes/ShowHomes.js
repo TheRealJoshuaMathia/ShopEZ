@@ -6,64 +6,81 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 
 const ShowHomes = () => {
-  const [homes, setHomes] = useState([]);
+    const [homes, setHomes] = useState([]);
 
-  useEffect(() => {
-    HomeService.getHomes().then(
-      (response) => {
-        setHomes(response.data);
-      },
-      (error) => {
-        const _setHomes =
-          (error.response &&
-            error.response.data &&
-            error.response.data.messsage) ||
-          error.message ||
-          error.toString();
-        setHomes(_setHomes);
+    useEffect(() => {
+        HomeService.getHomes().then(
+            (response) => {
+                setHomes(response.data);
+            },
+            (error) => {
+                const _setHomes =
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.messsage) ||
+                    error.message ||
+                    error.toString();
+                setHomes(_setHomes);
 
-        if (error.response && error.response.status === 401) {
-          EventBus.dispatch("logout");
-        }
-      }
-    );
-  }, []);
+                if (error.response && error.response.status === 401) {
+                    EventBus.dispatch("logout");
+                }
+            }
+        );
+    }, []);
 
-  return (
-    <Grid container direction="column">
-      <Grid item direction="column">
-        <List>
-          {console.log(homes)}
-          {homes &&
-            homes.map((home, index) => (
-              <div key={index}>
-                <ListItem>Home Name: {home.name}</ListItem>
-                <ListItem>
-                  {home.homeShoppingLists.map((list) => (
-                    <div>
-                      <ListItem>Home Id: {list.id}</ListItem>
-                      <ListItem>List title: {list.title}</ListItem>
+    return (
+        <Grid container direction="column">
+            <Grid item direction="column">
+                <List>
+                    {console.log(homes)}
+                    {homes &&
+                        homes.map((home, index) => (
+                            <div key={index}>
+                                <ListItem>
+                                    Home Name: {home.name}
+                                </ListItem>
+                                <ListItem>
+                                    {home.homeShoppingLists.map(list =>
+                                        <div>
+                                            <ListItem>
+                                                Home Id: {list.id}
+                                            </ListItem>
+                                            <ListItem>
+                                                List title: {list.title}
+                                            </ListItem>
 
-                      <ListItem>
-                        {list.shoppingList.map((item) => (
-                          <div>
-                            <ListItem>Item id: {item.id}</ListItem>
-                            <ListItem>Item title: {item.title}</ListItem>
-                            <ListItem>Item type: {item.type}</ListItem>
-                            <ListItem>Item Catagory: {item.catagory}</ListItem>
-                            <ListItem>Item Store: {item.store}</ListItem>
-                          </div>
+                                            <ListItem>
+                                                {list.shoppingList.map(item =>
+
+                                                    <div>
+                                                        <ListItem>
+                                                            Item id: {item.id}
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            Item title: {item.title}
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            Item type: {item.type}
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            Item Catagory: {item.catagory}
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            Item Store: {item.store}
+                                                        </ListItem>
+                                                    </div>
+                                                )}
+                                            </ListItem>
+                                        </div>
+                                    )}
+                                </ListItem>
+                            </div>
                         ))}
-                      </ListItem>
-                    </div>
-                  ))}
-                </ListItem>
-              </div>
-            ))}
-        </List>
-      </Grid>
-    </Grid>
-  );
+                </List>
+            </Grid>
+        </Grid>
+    );
 };
 
 export default ShowHomes;

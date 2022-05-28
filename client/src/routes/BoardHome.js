@@ -35,13 +35,13 @@ const BoardHome = () => {
           <Grid item>
             <List>
               <ListItem>
-                <Link to={"/showallHomes"}>Show All Homes</Link>
+                <Link to={"/showallhomes"}>Show All Homes</Link>
               </ListItem>
               <ListItem>
                 <Link to={`/userhomes/${username}`}>Show User Homes</Link>
               </ListItem>
               <ListItem>
-                <Typography> Hi</Typography>
+                <Link to={"/addhome"}>Create a Home</Link>
               </ListItem>
               <ListItem>
                 <Typography> Hi</Typography>
