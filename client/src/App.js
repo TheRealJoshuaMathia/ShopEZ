@@ -511,7 +511,7 @@ const App = () => {
             <Route path="/addhome" element={<AddHome />} />
 
             <Route path="/userhomes/:username" element={<ShowUserHomes />} />
-            <Route path="additem" element={<AddItem />} />
+            <Route path="/additem" element={<AddItem />} />
             <Route path="/items" element={<ItemList />} />
             <Route path="/items/:id" element={<Item />} />
           </Routes>

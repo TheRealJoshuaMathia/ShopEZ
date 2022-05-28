@@ -1,58 +1,63 @@
-
 import React, { useState } from "react";
-import Form from "react-validation/build/form";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import HomeService from "../services/home.service";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 const AddHome = () => {
-    let navigate = useNavigate();
-    const [homename, setHomeName] = useState("");
-    const onChangeHomeName = (e) => {
-        const homename = e.target.value;
-        setHomeName(homename);
-    }
+  let navigate = useNavigate();
+  const [homeName, setHomeName] = useState("");
 
-    const handleSubmit = () => {
-        HomeService.createHome(homename)
-            .then((response) => {
-                console.log(response.data)
-                console.log("Submitted SuccessFully");
-                navigate("/boardhome");
-            })
-            .catch((event) => {
-                console.log(event);
-                console.log("Error on submission");
-            });
-    };
+  //   const [submitted, setSubmitted] = useState(false);
+  const handleInputChange = (e) => {
+    const homeName = e.target.value;
+    setHomeName(homeName);
+  };
 
-    return (
-        <Grid container justifyContent="center" alignItems="center">
-            <form>
+  const saveHome = (e) => {
+    e.preventDefault();
+    HomeService.createHome(homeName).then(
+      (response) => {
+        // setSubmitted(true);
+        console.log(response.data);
+        console.log("Submitted Successfully");
+        navigate("/boardhome");
+      },
+      (error) => {
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+          error.message ||
+          error.toString();
+      }
+    );
+  };
 
-                <Grid item marginTop={2} >
-                    <TextField
-                        label="Home Name"
-                        variant="outlined"
-                        value={homename}
-                        name="Home Name"
-                        onChange={onChangeHomeName}></TextField>
-                </Grid>
-                <Grid item padding={5} >
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleSubmit}>
-                        Submit
+  //   const newHome = () => {
+  //     setHome(defaultHomeState);
+  //     setSubmitted(false);
+  //   };
 
-                    </Button>
-                </Grid>
-            </form>
+  return (
+    <Grid container justifyContent="center" alignItems="center">
+      <form>
+        <Grid item marginTop={2}>
+          <TextField
+            label="Home Name"
+            variant="outlined"
+            value={homeName}
+            name="HomeName"
+            onChange={handleInputChange}
+          />
         </Grid>
-
-    )
-
-}
+        <Grid item padding={5}>
+          <Button variant="contained" color="primary" onClick={saveHome}>
+            Submit
+          </Button>
+        </Grid>
+      </form>
+    </Grid>
+  );
+};
 
 export default AddHome;

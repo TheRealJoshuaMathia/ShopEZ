@@ -14,7 +14,11 @@ const getUserHomes = (username) => {
 };
 
 const createHome = (homename) => {
-  return axios.post(API_URL + "add", { homename }, { headers: authHeader() });
+  return axios.post(
+    API_URL + "add",
+    { name: homename },
+    { headers: authHeader() }
+  );
 };
 
 const addUserToHome = (data) => {
