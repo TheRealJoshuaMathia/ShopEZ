@@ -4,6 +4,7 @@ import EventBus from "../common/EventBus";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const ShowUserHomes = () => {
@@ -44,7 +45,9 @@ const ShowUserHomes = () => {
           {showHomes &&
             showHomes.map((home) => (
               <div>
-                <ListItem>{home.name}</ListItem>
+                <ListItem>
+                  <Link to={`/shoppinglists/${home.name}`}>View {home.name} Shopping list </Link>
+                </ListItem>
               </div>
             ))}
         </List>

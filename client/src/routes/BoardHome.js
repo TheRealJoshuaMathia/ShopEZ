@@ -44,7 +44,7 @@ const BoardHome = () => {
                 <Link to={"/addhome"}>Create a Home</Link>
               </ListItem>
               <ListItem>
-                <Typography> Hi</Typography>
+                <Link to={"/addusertohome"}>Add User To Home</Link>
               </ListItem>
             </List>
           </Grid>

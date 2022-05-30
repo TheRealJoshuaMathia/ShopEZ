@@ -22,6 +22,8 @@ import BoardHome from "./routes/BoardHome";
 import ShowHomes from "./routes/ShowHomes";
 import ShowUserHomes from "./routes/ShowUserHomes";
 import AddHome from "./routes/AddHome";
+import AddUserToHome from "./routes/AddUserToHome";
+import ShowHomeShoppingLists from "./routes/ShowHomeShoppingLists";
 
 // Styling Imports
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -509,6 +511,8 @@ const App = () => {
             <Route path="/boardhome" element={<BoardHome />} />
             <Route path="/showallhomes" element={<ShowHomes />} />
             <Route path="/addhome" element={<AddHome />} />
+            <Route path="/addusertohome" element={<AddUserToHome />} />
+            <Route path="/shoppinglists/:homename" element={<ShowHomeShoppingLists />} />
 
             <Route path="/userhomes/:username" element={<ShowUserHomes />} />
             <Route path="/additem" element={<AddItem />} />

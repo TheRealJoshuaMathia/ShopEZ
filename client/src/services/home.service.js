@@ -21,8 +21,8 @@ const createHome = (homename) => {
   );
 };
 
-const addUserToHome = (data) => {
-  return axios.post(API_URL + "adduser", data, { headers: authHeader() });
+const addUserToHome = (username, homename) => {
+  return axios.post(API_URL + "adduser", { username: username, name: homename }, { headers: authHeader() });
 };
 
 const getHomeShoppingLists = (homename) => {
