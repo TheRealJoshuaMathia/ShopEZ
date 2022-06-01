@@ -22,7 +22,11 @@ const createHome = (homename) => {
 };
 
 const addUserToHome = (username, homename) => {
-  return axios.post(API_URL + "adduser", { username: username, name: homename }, { headers: authHeader() });
+  return axios.post(
+    API_URL + "adduser",
+    { username: username, name: homename },
+    { headers: authHeader() }
+  );
 };
 
 const getHomeShoppingLists = (homename) => {
@@ -31,10 +35,11 @@ const getHomeShoppingLists = (homename) => {
   });
 };
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const HomeService = {
   getHomes,
   getUserHomes,
   createHome,
   addUserToHome,
   getHomeShoppingLists,
 };
+export default HomeService;

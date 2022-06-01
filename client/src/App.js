@@ -24,7 +24,7 @@ import ShowUserHomes from "./routes/ShowUserHomes";
 import AddHome from "./routes/AddHome";
 import AddUserToHome from "./routes/AddUserToHome";
 import ShowHomeShoppingLists from "./routes/ShowHomeShoppingLists";
-
+import ShowShoppingList from "./routes/ShowShoppingList";
 // Styling Imports
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -512,7 +512,11 @@ const App = () => {
             <Route path="/showallhomes" element={<ShowHomes />} />
             <Route path="/addhome" element={<AddHome />} />
             <Route path="/addusertohome" element={<AddUserToHome />} />
-            <Route path="/shoppinglists/:homename" element={<ShowHomeShoppingLists />} />
+            <Route
+              path="/shoppinglists/:homename"
+              element={<ShowHomeShoppingLists />}
+            />
+            <Route path="/shoppinglist/:id" element={<ShowShoppingList />} />
 
             <Route path="/userhomes/:username" element={<ShowUserHomes />} />
             <Route path="/additem" element={<AddItem />} />

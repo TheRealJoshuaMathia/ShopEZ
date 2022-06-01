@@ -10,8 +10,9 @@ const getList = (id) => {
 const createList = (data) => {
   return axios.post(API_URL + "create", data, { headers: authHeader() });
 };
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+
+const ShoppingListService = {
   getList,
   createList,
 };
+export default ShoppingListService;

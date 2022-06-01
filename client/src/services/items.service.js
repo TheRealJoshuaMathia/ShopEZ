@@ -23,7 +23,7 @@ const findByTitle = (title) => {
   });
 };
 // eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const ItemService = {
   getAll,
   get,
   create,
@@ -31,3 +31,4 @@ export default {
   remove,
   findByTitle,
 };
+export default ItemService;
