@@ -14,10 +14,6 @@ import AuthService from "./services/auth.service";
 import Register from "./routes/Register";
 import Login from "./routes/Login";
 import Profile from "./routes/Profile";
-import BoardAdmin from "./routes/BoardAdmin";
-import BoardCaregiver from "./routes/BoardCaregiver";
-import BoardShopper from "./routes/BoardShopper";
-import BoardUser from "./routes/BoardUser";
 import BoardHome from "./routes/BoardHome";
 import ShowHomes from "./routes/ShowHomes";
 import ShowUserHomes from "./routes/ShowUserHomes";
@@ -86,22 +82,13 @@ const appBarStyles = createTheme({
 });
 
 const App = () => {
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [showCaregiverBoard, setShowCaregiverBoard] = useState(false);
-  const [showShopperBoard, setShowShopperBoard] = useState(false);
-  const [showUserBoard, setShowUserBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
-
   const [showBoardHome, setShowBoardHome] = useState(false);
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-      setShowCaregiverBoard(user.roles.includes("ROLE_CAREGIVER"));
-      setShowShopperBoard(user.roles.includes("ROLE_SHOPPER"));
-      setShowUserBoard(user.roles.includes("ROLE_USER"));
       setShowBoardHome(user.roles.includes("ROLE_ADMIN"));
     }
     EventBus.on("logout", () => {
@@ -115,10 +102,7 @@ const App = () => {
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(undefined);
-    setShowAdminBoard(false);
-    setShowCaregiverBoard(false);
-    setShowShopperBoard(false);
-    setShowUserBoard(false);
+    setShowBoardHome(false);
   };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -143,7 +127,7 @@ const App = () => {
     <ThemeProvider theme={appStyles}>
       <div>
         <ThemeProvider theme={appBarStyles}>
-          <AppBar position="static">
+          <AppBar position="sticky">
             <Container maxWidth="xl">
               <Toolbar disableGutters>
                 <Typography
@@ -239,47 +223,6 @@ const App = () => {
                         </MenuItem>
                       </div>
                     )}
-
-                    {showAdminBoard && (
-                      <MenuItem onClick={handleCloseNavMenu}>
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/admin"}>Admin Board</Link>
-                          </div>
-                        </Typography>
-                      </MenuItem>
-                    )}
-
-                    {showUserBoard && (
-                      <MenuItem onClick={handleCloseNavMenu}>
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/user"}>User Board</Link>
-                          </div>
-                        </Typography>
-                      </MenuItem>
-                    )}
-
-                    {showShopperBoard && (
-                      <MenuItem onClick={handleCloseNavMenu}>
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/shopper"}>Shopper Board</Link>
-                          </div>
-                        </Typography>
-                      </MenuItem>
-                    )}
-
-                    {showCaregiverBoard && (
-                      <MenuItem onClick={handleCloseNavMenu}>
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/caregiver"}>Caregiver Board</Link>
-                          </div>
-                        </Typography>
-                      </MenuItem>
-                    )}
-
                     {showBoardHome && (
                       <MenuItem onClick={handleCloseNavMenu}>
                         <Typography>
@@ -364,56 +307,6 @@ const App = () => {
                     </div>
                   )}
 
-                  {showAdminBoard && (
-                    <Button
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/admin"}>Admin Board</Link>
-                        </div>
-                      </Typography>
-                    </Button>
-                  )}
-                  {showUserBoard && (
-                    <Button
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/user"}>User Board</Link>
-                        </div>
-                      </Typography>
-                    </Button>
-                  )}
-
-                  {showShopperBoard && (
-                    <Button
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/shopper"}>Shopper Board</Link>
-                        </div>
-                      </Typography>
-                    </Button>
-                  )}
-                  {showCaregiverBoard && (
-                    <Button
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/caregiver"}>Caregiver Board</Link>
-                        </div>
-                      </Typography>
-                    </Button>
-                  )}
-
                   {showBoardHome && (
                     <Button
                       onClick={handleCloseNavMenu}
@@ -450,10 +343,6 @@ const App = () => {
                     open={Boolean(anchorElUser)}
                     onClose={handleCloseUserMenu}
                   >
-                    <MenuItem key="setting" onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">wow</Typography>
-                    </MenuItem>
-
                     {currentUser ? (
                       <MenuItem>
                         <Button
@@ -504,10 +393,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/user" element={<BoardUser />} />
-            <Route path="/admin" element={<BoardAdmin />} />
-            <Route path="/caregiver" element={<BoardCaregiver />} />
-            <Route path="/shopper" element={<BoardShopper />} />
             <Route path="/boardhome" element={<BoardHome />} />
             <Route path="/showallhomes" element={<ShowHomes />} />
             <Route path="/addhome" element={<AddHome />} />

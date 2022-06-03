@@ -4,13 +4,15 @@ import ShoppingListService from "../services/shoppinglist.service";
 import Grid from "@mui/material/Grid";
 import EventBus from "../common/EventBus";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Fab from "@mui/material/Fab";
+import EditIcon from "@mui/icons-material/Edit";
 
 // Styles
 
@@ -19,33 +21,30 @@ const styles = createTheme({
     MuiCard: {
       styleOverrides: {
         root: {
-          "&.card-item": {
-            cursor: "pointer",
-            width: "50vh",
-          },
-          ".item-details": {
-            color: "white",
-            padding: 10,
+          ".item-title": {
+            fontSize: "2em",
           },
           ".item-details-section": {
             marginTop: 10,
             backgroundColor: "black",
-            width: "50%",
             color: "white",
+            fontSize: "1em",
+            paddingLeft: 2,
+            paddingBottom: "10px",
           },
-          "&.active-item": {
-            backgroundColor: "gray",
+          ".item-detail": {
+            marginLeft: "10px",
+            paddingTop: "10px",
           },
         },
       },
     },
-    MuiGrid: {
-      styleOverrides: {
-        root: {},
-      },
-    },
   },
 });
+
+const buttonClick = () => {
+  alert("Button Clicked LOL");
+};
 
 const ShowShoppingList = () => {
   const { id } = useParams();
@@ -83,55 +82,89 @@ const ShowShoppingList = () => {
         direction="column"
         sx={{
           backgroundColor: "black",
-          height: "100vh",
-          marginTop: 5,
+          minHeight: "100vh",
+          paddingTop: "50px",
         }}
       >
-        <Grid item direction="column" className="item-grid">
-          <List>
-            {shoppingList && (
-              <>
-                <div className="list-info">
-                  <ListItem>{shoppingList.id}</ListItem>
-                  <ListItem>{shoppingList.title}</ListItem>
-                </div>
+        <Grid container direction="column" alignContent="center">
+          {shoppingList && (
+            <>
+              <Grid item>
+                <Box
+                  sx={{
+                    backgroundColor: "gray",
+                    height: "25%",
+                    color: "white",
+                    textAlign: "center",
+                    verticalAlign: "center",
+                    padding: "5px",
+                  }}
+                >
+                  <Typography variant="h4">
+                    List ID: {shoppingList.id}
+                  </Typography>
+                  <Typography variant="h4">
+                    List Title: {shoppingList.title}
+                  </Typography>
+                </Box>
+              </Grid>
 
+              <List>
                 {shoppingList.shoppingList.length !== 0 &&
                   shoppingList.shoppingList.map((item, index) => (
                     <Grid
                       item
                       direction="column"
-                      alignItems="center"
                       sx={{
-                        marginTop: 5,
-                        width: "50vw",
-                        marginLeft: 5,
+                        marginTop: "20px",
+                        marginBottom: "25px",
+                        maxWidth: "90vw",
+                        width: "500px",
                       }}
                     >
-                      <div key={index}>
+                      <Box key={index}>
                         <Card>
                           <CardContent>
-                            <Typography variant="h4">{item.id}</Typography>
-                            <Typography variant="h4">{item.title}</Typography>
+                            {/* <Typography variant="h4">{item.id}</Typography> */}
+                            <Box>
+                              <Typography className="item-title">
+                                {item.title}
+                              </Typography>
+                            </Box>
+
                             <Box className="item-details-section">
-                              <Typography className="item-details">
+                              <Typography className="item-detail">
                                 Type: {item.type}
                               </Typography>
-                              <Typography className="item-details">
+                              <Typography className="item-detail">
                                 Catagory: {item.catagory}
                               </Typography>
-                              <Typography className="item-details">
+                              <Typography className="item-detail">
                                 Store: {item.store}
                               </Typography>
                             </Box>
                           </CardContent>
+                          <Box>
+                            <Fab
+                              sx={{
+                                float: "right",
+                                marginRight: "20px",
+                                marginBottom: "10px",
+                              }}
+                              color="primary"
+                              aria-label="edit"
+                              size="medium"
+                            >
+                              <EditIcon />
+                            </Fab>
+                          </Box>
                         </Card>
-                      </div>
+                      </Box>
                     </Grid>
                   ))}
-              </>
-            )}
-          </List>
+              </List>
+            </>
+          )}
         </Grid>
       </Grid>
     </ThemeProvider>

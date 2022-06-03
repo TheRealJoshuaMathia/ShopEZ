@@ -3,11 +3,14 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <CssBaseline>
+      <Router>
+        <App />
+      </Router>
+    </CssBaseline>
   </React.StrictMode>,
   document.getElementById("root")
 );
