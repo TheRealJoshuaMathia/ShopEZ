@@ -105,14 +105,22 @@ const App = () => {
     setShowBoardHome(false);
   };
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElItems, setAnchorElItems] = useState(null);
+  const [anchorElHome, setAnchorElHome] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+  };
+  const handleOpenItemsMenu = (event) => {
+    setAnchorElItems(event.currentTarget);
+  };
+  const handleOpenHomeMenu = (event) => {
+    setAnchorElHome(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
@@ -122,7 +130,14 @@ const App = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const handleCloseItemsMenu = () => {
+    setAnchorElItems(null);
+  };
+  const handleCloseHomeMenu = () => {
+    setAnchorElHome(null);
+  };
 
+  const openItemsMenu = Boolean(anchorElItems);
   return (
     <ThemeProvider theme={appStyles}>
       <div>
@@ -224,7 +239,7 @@ const App = () => {
                       </div>
                     )}
                     {showBoardHome && (
-                      <MenuItem onClick={handleCloseNavMenu}>
+                      <MenuItem onClick={handleCloseHomeMenu}>
                         <Typography>
                           <div className="link">
                             <Link to={"/boardhome"}>Home Board</Link>
@@ -258,30 +273,199 @@ const App = () => {
                       </div>
                     </Typography>
                   </Button>
-                  {currentUser ? (
-                    <div>
-                      <Button
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: "white", display: "inline-block" }}
-                      >
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/profile"}>{currentUser.username}</Link>
-                          </div>
-                        </Typography>
-                      </Button>
 
-                      <Button
-                        onClick={handleCloseNavMenu}
-                        sx={{ my: 2, color: "white", display: "inline-block" }}
-                      >
-                        <Typography>
-                          <div className="link">
-                            <Link to={"/items"}>Items</Link>
-                          </div>
-                        </Typography>
-                      </Button>
-                    </div>
+                  {currentUser ? (
+                    <>
+                      <div>
+                        <Button
+                          onClick={handleCloseNavMenu}
+                          sx={{
+                            my: 2,
+                            color: "white",
+                            display: "inline-block",
+                          }}
+                        >
+                          <Typography>
+                            <div className="link">
+                              <Link to={"/profile"}>
+                                {currentUser.username}
+                              </Link>
+                            </div>
+                          </Typography>
+                        </Button>
+
+                        <Button
+                          onClick={handleOpenItemsMenu}
+                          sx={{
+                            my: 2,
+                            color: "white",
+                            display: "inline-block",
+                          }}
+                        >
+                          <Typography>
+                            <div className="link">Items</div>
+                          </Typography>
+                        </Button>
+                        <Button
+                          onClick={handleOpenHomeMenu}
+                          sx={{
+                            my: 2,
+                            color: "white",
+                            display: "inline-block",
+                          }}
+                        >
+                          <Typography>
+                            <div className="link">Homes</div>
+                          </Typography>
+                        </Button>
+                      </div>
+                      <Box sx={{ flexGrow: 0 }}>
+                        <Menu
+                          sx={{ mt: "45px" }}
+                          id="menu-appbar"
+                          anchorEl={anchorElItems}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          open={Boolean(anchorElItems)}
+                          onClose={handleCloseItemsMenu}
+                        >
+                          <>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseItemsMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/additem"}>Add Item</Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseItemsMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/items"}>View Items</Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                          </>
+                        </Menu>
+                      </Box>
+                      <Box sx={{ flexGrow: 0 }}>
+                        <Menu
+                          sx={{ mt: "45px" }}
+                          id="menu-appbar"
+                          anchorEl={anchorElHome}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          keepMounted
+                          transformOrigin={{
+                            vertical: "top",
+                            horizontal: "right",
+                          }}
+                          open={Boolean(anchorElHome)}
+                          onClose={handleCloseHomeMenu}
+                        >
+                          <>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseHomeMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/showallhomes"}>
+                                      Show All Homes
+                                    </Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseHomeMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link
+                                      to={`/userhomes/${currentUser.username}`}
+                                    >
+                                      Show User Homes
+                                    </Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseHomeMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/addhome"}>Add a Home</Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseHomeMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/addusertohome"}>
+                                      Add a User to a Home
+                                    </Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                          </>
+                        </Menu>
+                      </Box>
+                    </>
                   ) : (
                     <div>
                       <Button
@@ -306,21 +490,7 @@ const App = () => {
                       </Button>
                     </div>
                   )}
-
-                  {showBoardHome && (
-                    <Button
-                      onClick={handleCloseNavMenu}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      <Typography>
-                        <div className="link">
-                          <Link to={"/boardhome"}>Home Board</Link>
-                        </div>
-                      </Typography>
-                    </Button>
-                  )}
                 </Box>
-
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
