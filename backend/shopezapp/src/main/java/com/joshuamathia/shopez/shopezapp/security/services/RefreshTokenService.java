@@ -5,11 +5,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.joshuamathia.shopez.shopezapp.exception.TokenRefreshException;
 import com.joshuamathia.shopez.shopezapp.models.RefreshToken;
-import com.joshuamathia.shopez.shopezapp.models.User;
 import com.joshuamathia.shopez.shopezapp.repository.RefreshTokenRepository;
 import com.joshuamathia.shopez.shopezapp.repository.UserRepository;
 

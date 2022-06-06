@@ -10,7 +10,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import EditIcon from "@mui/icons-material/Edit";
 
@@ -41,10 +40,6 @@ const styles = createTheme({
     },
   },
 });
-
-const buttonClick = () => {
-  alert("Button Clicked LOL");
-};
 
 const ShowShoppingList = () => {
   const { id } = useParams();

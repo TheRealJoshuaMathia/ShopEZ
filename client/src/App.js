@@ -14,7 +14,6 @@ import AuthService from "./services/auth.service";
 import Register from "./routes/Register";
 import Login from "./routes/Login";
 import Profile from "./routes/Profile";
-import BoardHome from "./routes/BoardHome";
 import ShowHomes from "./routes/ShowHomes";
 import ShowUserHomes from "./routes/ShowUserHomes";
 import AddHome from "./routes/AddHome";
@@ -136,8 +135,6 @@ const App = () => {
   const handleCloseHomeMenu = () => {
     setAnchorElHome(null);
   };
-
-  const openItemsMenu = Boolean(anchorElItems);
   return (
     <ThemeProvider theme={appStyles}>
       <div>
@@ -563,7 +560,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/boardhome" element={<BoardHome />} />
             <Route path="/showallhomes" element={<ShowHomes />} />
             <Route path="/addhome" element={<AddHome />} />
             <Route path="/addusertohome" element={<AddUserToHome />} />
