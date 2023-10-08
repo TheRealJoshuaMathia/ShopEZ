@@ -22,6 +22,8 @@ const styles = createTheme({
     },
   },
 });
+
+// Make the stores dynamic values instead of static so that it can be applicable to specific users
 const stores = [
   {
     value: "TBD",
@@ -58,10 +60,14 @@ const AddItem = () => {
   const [submitted, setSubmitted] = useState(false);
 
   let navigate = useNavigate();
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setItem({ ...item, [name]: value });
   };
+
+  // Creates an item object with title, type, catagory, and store.
+  // The values are passed to a service layer that will take the object and create the item object in the database.
   const saveItem = () => {
     var data = {
       title: item.title,

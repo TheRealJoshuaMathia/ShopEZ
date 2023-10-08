@@ -9,7 +9,7 @@ const get = (id) => {
   return axios.get(API_URL + `items/${id}`, { headers: authHeader() });
 };
 const create = (data) => {
-  return axios.post(API_URL + "items", data, { headers: authHeader() });
+  return axios.post(API_URL + "items/add", data, { headers: authHeader() });
 };
 const update = (id, data) => {
   return axios.put(API_URL + `items/${id}`, data, { headers: authHeader() });

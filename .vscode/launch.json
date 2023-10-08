@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch ShopezappApplication",
+      "request": "launch",
+      "mainClass": "com.joshuamathia.shopez.shopezapp.ShopezappApplication",
+      "projectName": "shopezapp"
+    },
+    {
+      "type": "java",
       "name": "Launch UsersTest",
       "request": "launch",
       "mainClass": "com.joshuamathia.shopez.shopezapp.UsersTest",

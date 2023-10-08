@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import HomeService from "../services/home.service";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+
+// States
 const AddHome = () => {
   let navigate = useNavigate();
   const [homeName, setHomeName] = useState("");
@@ -14,6 +16,11 @@ const AddHome = () => {
     setHomeName(homeName);
   };
 
+  // ------------------------
+
+  // method: saveHome
+  // function: The function stores the data inputed from the client.
+  //           It calls the "HomeService" that is a create request in the back end.
   const saveHome = (e) => {
     e.preventDefault();
     HomeService.createHome(homeName).then(
@@ -32,11 +39,6 @@ const AddHome = () => {
       }
     );
   };
-
-  //   const newHome = () => {
-  //     setHome(defaultHomeState);
-  //     setSubmitted(false);
-  //   };
 
   return (
     <Grid container justifyContent="center" alignItems="center">

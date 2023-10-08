@@ -1,3 +1,6 @@
+// File Name: EventBus
+// Function: Event listener for the dom to call an event
+
 const EventBus = {
   on(event, callback) {
     document.addEventListener(event, (e) => callback(e.detail));

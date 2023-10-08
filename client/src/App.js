@@ -20,6 +20,7 @@ import AddHome from "./routes/AddHome";
 import AddUserToHome from "./routes/AddUserToHome";
 import ShowHomeShoppingLists from "./routes/ShowHomeShoppingLists";
 import ShowShoppingList from "./routes/ShowShoppingList";
+import CreateList from "./routes/CreateList";
 // Styling Imports
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -343,7 +344,7 @@ const App = () => {
                                   display: "inline-block",
                                 }}
                               >
-                                <Typography>
+                                <Typography sx={{ padding: "10px" }}>
                                   <div className="link">
                                     <Link to={"/additem"}>Add Item</Link>
                                   </div>
@@ -441,6 +442,9 @@ const App = () => {
                                 </Typography>
                               </Button>
                             </MenuItem>
+
+                            {/* Testing just simply adding so I can create a list because the component is not accessible */}
+
                             <MenuItem>
                               <Button
                                 onClick={handleCloseHomeMenu}
@@ -454,6 +458,24 @@ const App = () => {
                                   <div className="link">
                                     <Link to={"/addusertohome"}>
                                       Add a User to a Home
+                                    </Link>
+                                  </div>
+                                </Typography>
+                              </Button>
+                            </MenuItem>
+                            <MenuItem>
+                              <Button
+                                onClick={handleCloseHomeMenu}
+                                sx={{
+                                  my: 2,
+                                  color: "white",
+                                  display: "inline-block",
+                                }}
+                              >
+                                <Typography>
+                                  <div className="link">
+                                    <Link to={"/createlist"}>
+                                      Create Shopping List
                                     </Link>
                                   </div>
                                 </Typography>
@@ -570,6 +592,7 @@ const App = () => {
             <Route path="/shoppinglist/:id" element={<ShowShoppingList />} />
 
             <Route path="/userhomes/:username" element={<ShowUserHomes />} />
+            <Route path={"/createlist"} element={<CreateList />} />
             <Route path="/additem" element={<AddItem />} />
             <Route path="/items" element={<ItemList />} />
             <Route path="/items/:id" element={<Item />} />

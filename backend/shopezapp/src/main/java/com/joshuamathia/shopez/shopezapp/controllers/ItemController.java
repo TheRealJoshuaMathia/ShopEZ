@@ -63,7 +63,7 @@ public class ItemController {
         }
     }
   
-    @PostMapping("/items")
+    @PostMapping("/items/add")
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
         try {
             item = itemRepository.save(item);
